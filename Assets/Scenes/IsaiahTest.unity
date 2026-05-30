@@ -1747,8 +1747,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ThridPersonCamera
   target: {fileID: 1554636276}
   mouseSensitivity: 200
-  distance: 24
-  height: 5
+  distance: 18
+  height: 7
   minY: -30
   maxY: 60
 --- !u!1 &1072749383
