@@ -43,19 +43,23 @@ public class ThridPersonCamera : MonoBehaviour
         if (target == null) return;
 
         // rotate camera around player
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, minY, maxY);
+        //yRotation += mouseX;
+        //xRotation -= mouseY;
+        //xRotation = Mathf.Clamp(xRotation, minY, maxY);
 
-        Quaternion rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        Quaternion rotation = Quaternion.Euler(25.372f, -132.458f,-7.867f);
 
         Vector3 offset = new Vector3(0, height, -distance);
-        Vector3 desiredPosition = target.position + rotation * offset;
+        transform.position = target.position + rotation * offset;
+        //Vector3 desiredPosition = target.position + rotation * offset;
 
-        transform.LookAt(target.position + Vector3.up * 1.5f);
+        //transform.position = desiredPosition;
+
+        //transform.LookAt(target.position + Vector3.up * 1.5f);
+        transform.LookAt(target.position);
     }
 
     void LockCursor()

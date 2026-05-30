@@ -1747,8 +1747,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ThridPersonCamera
   target: {fileID: 1554636276}
   mouseSensitivity: 200
-  distance: 6
-  height: 2
+  distance: 24
+  height: 5
   minY: -30
   maxY: 60
 --- !u!1 &1072749383
@@ -11969,7 +11969,7 @@ GameObject:
   - component: {fileID: 1554636277}
   m_Layer: 0
   m_Name: KnightPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
