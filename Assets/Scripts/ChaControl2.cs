@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
 
-public class charcontrol : MonoBehaviour
+public class ChaControl2 : MonoBehaviour
 {
-    //knight
-    private float playerSpeed = 2.5f;
+    //archer character
+    private float playerSpeed = 5f;
     private float gravityValue = -9.81f;
 
     private CharacterController controller;
@@ -21,7 +20,6 @@ public class charcontrol : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main.GetComponent<ThridPersonCamera>();
         /*
         //camera
         cam = Camera.main.GetComponent<ThridPersonCamera>();
@@ -64,9 +62,7 @@ public class charcontrol : MonoBehaviour
 
         if (move != Vector3.zero)
         {
-            //transform.forward = move;
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+            transform.forward = move;
         }
 
         // Apply gravity
