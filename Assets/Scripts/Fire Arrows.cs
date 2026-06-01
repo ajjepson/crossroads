@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class FireArrows : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class FireArrows : MonoBehaviour
     public bool arrowFire;
     public bool arrowIce;
     public bool arrowNormal;
+    public TMP_Text typeOfArrow;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        typeOfArrow.text = "Normal";
         arrowFire = false;
         arrowIce = false;
         arrowNormal = true;
@@ -26,6 +29,7 @@ public class FireArrows : MonoBehaviour
         {
             //fire arrow is selected
             Debug.Log("fire");
+            typeOfArrow.text = "Fire";
             arrowFire = true;
             arrowIce = false;
             arrowNormal = false;
@@ -34,6 +38,7 @@ public class FireArrows : MonoBehaviour
         {
             //ice arrow is selected
             Debug.Log("ice");
+            typeOfArrow.text = "Ice";
             arrowFire = false;
             arrowIce = true;
             arrowNormal = false;
@@ -42,6 +47,7 @@ public class FireArrows : MonoBehaviour
         {
             //normal arrow is selected
             Debug.Log("normal");
+            typeOfArrow.text = "Normal";
             arrowFire = false;
             arrowIce = false;
             arrowNormal = true;
