@@ -4,6 +4,7 @@ public class SwordSwing : MonoBehaviour
 {
     private Animator animator;
     public bool attacking;
+    public int damage = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,12 +30,14 @@ public class SwordSwing : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (attacking == true)
+      if (attacking && other.CompareTag("Enemy"))
         {
-            if(other.CompareTag("enemy"))
+            Debug.Log("you hit an Enemy");
+            //deal damage to enemy
+            SkeletonController enemy = other.GetComponent<SkeletonController>();
+            if (enemy != null)
             {
-                //emeny take damage
-                Debug.Log("enemt took damage");
+                enemy.TakeDamage(damage);
             }
             if (other.CompareTag("BreakObject"))
             {

@@ -3,207 +3,93 @@ using UnityEngine;
 
 public class SkeletonController : MonoBehaviour
 {
-    public enum EnemyState { Idle, Patrol, Chase, Attack }
+    public enum EnemyState { Patrol, Chase, Attack }
     public EnemyState currentState;
 
-    //CONFIGURATION 
+    [Header("Setup")]
     [SerializeField] private Transform pointA;
     [SerializeField] private Transform pointB;
     [SerializeField] private Transform player;
-    [SerializeField] public FloatingHealthBar floatingHealthBar;
-    [SerializeField] private int damage = 10;
-    [SerializeField] private float attackCooldown = 1f;
-    private float lastAttackTime;
+    [SerializeField] private FloatingHealthBar healthBar;
 
-    //[Header("Stats")]
+    [Header("Stats")]
     [SerializeField] private float speed = 2f;
     [SerializeField] private float sightRange = 10f;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private int maxHealth = 30;
-    [SerializeField] private int explsoionChangePercent = 30;
-    [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private float attackCooldown = 1f;
 
-
-    [SerializeField] private float groundCheckDistance = 2f;
-
-    private int currentHealth;
-    private Vector3 patrolTarget;
+    int health;
+    float lastAttackTime;
+    Transform targetPoint;
 
     void Start()
     {
-        TryExplode();
-        currentHealth = 30;
-        currentHealth = maxHealth;
-        patrolTarget = pointB.position;
-        currentState = EnemyState.Patrol;
+        health = maxHealth;
 
-        if (floatingHealthBar != null)
-            floatingHealthBar.UpdateBar(currentHealth, maxHealth);
+        targetPoint = pointA; 
+
+        healthBar?.UpdateBar(health, maxHealth);
     }
 
     void Update()
     {
-        UpdateState();
+        float dist = Vector3.Distance(transform.position, player.position);
 
-        switch (currentState)
-        {
-            case EnemyState.Patrol:
-                HandlePatrol();
-                break;
+        if (dist <= attackRange) currentState = EnemyState.Attack;
+        else if (dist <= sightRange) currentState = EnemyState.Chase;
+        else currentState = EnemyState.Patrol;
 
-            case EnemyState.Chase:
-                HandleChase();
-                break;
+        if (currentState == EnemyState.Patrol) Patrol();
+        if (currentState == EnemyState.Chase) Chase();
+        if (currentState == EnemyState.Attack) Attack();
 
-            case EnemyState.Attack:
-                HandleAttack();
-                break;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(50);
-        }
+        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(50);
     }
 
-    void UpdateState()
+    void Patrol()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        Move(targetPoint.position);
 
-        if (distance <= attackRange)
-            currentState = EnemyState.Attack;
-
-        else if (distance <= sightRange)
-            currentState = EnemyState.Chase;
-
-        else
-            currentState = EnemyState.Patrol;
+        if (Vector3.Distance(transform.position, targetPoint.position) < 0.8f)
+            targetPoint = (targetPoint == pointA) ? pointB : pointA;
     }
 
-    // partol
-    void HandlePatrol()
+    void Chase()
     {
-        MoveTo(patrolTarget);
+        Move(player.position);
+    }
 
-        if (Vector3.Distance(transform.position, patrolTarget) < 0.3f)
+    void Attack()
+    {
+        Move(transform.position);
+
+        if (Time.time > lastAttackTime + attackCooldown)
         {
-            patrolTarget = (patrolTarget == pointA.position)
-                ? pointB.position
-                : pointA.position;
-        }
-
-        CheckGround();
-    }
-
-    // Chase
-    void HandleChase()
-    {
-        MoveTo(player.position);
-        CheckGround();
-    }
-
-    //Attack
-    void HandleAttack()
-    {
-        MoveTo(transform.position); // stop moving
-
-        Debug.Log("Skeleton Attacking Player!");
-
-        if (Time.time >= lastAttackTime + attackCooldown)
-        {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-            }
+            Health p = player.GetComponent<Health>();
+            if (p != null) p.TakeDamage(damage);
 
             lastAttackTime = Time.time;
         }
-
     }
 
-    void MoveTo(Vector3 target)
+    void Move(Vector3 target)
     {
-        Vector3 fixedTarget = new Vector3(
-            target.x,
-            transform.position.y,
-            target.z
-        );
-
         transform.position = Vector3.MoveTowards(
             transform.position,
-            fixedTarget,
+            new Vector3(target.x, transform.position.y, target.z),
             speed * Time.deltaTime
         );
-
-        RotateTowards(fixedTarget);
     }
 
-    // Rotate
-    void RotateTowards(Vector3 target)
-    {
-        Vector3 direction = target - transform.position;
-
-        if (direction.x >= 0)
-            transform.rotation = Quaternion.Euler(0, 90, 0);
-        else
-            transform.rotation = Quaternion.Euler(0, -90, 0);
-    }
-
-   
-    void CheckGround()
-    {
-        RaycastHit hit;
-
-        if (!Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, groundCheckDistance))
-        {
-            // no ground ahead → switch patrol direction
-            patrolTarget = (patrolTarget == pointA.position)
-                ? pointB.position
-                : pointA.position;
-        }
-    }
-
-    
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        health -= amount;
+        healthBar?.UpdateBar(health, maxHealth);
 
-        Debug.Log("HP: " + currentHealth);
-
-        if (floatingHealthBar != null)
-            floatingHealthBar.UpdateBar(currentHealth, maxHealth);
-
-        if (currentHealth <= 0)
-        {
-            TryExplode();
-        }
-        else if (currentHealth <= 30)
-        {
-            TryExplode();
-        }
-
+        if (health <= 0) Destroy(gameObject);
     }
-    void TryExplode()
-    {
-        int chance = Random.Range(0, 3);
-        if (chance < explsoionChangePercent)
-        {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            Die();
-        }
-        Debug.Log("Enemy exploaded)");
-    }
-
-    void Die()
-    {
-        Collider col = GetComponent<Collider>();
-        if (col != null) col.enabled = false;
-
-        Destroy(gameObject, 3f);
-    }
-
-    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -220,3 +106,7 @@ public class SkeletonController : MonoBehaviour
     }
 
 }
+
+
+
+    
