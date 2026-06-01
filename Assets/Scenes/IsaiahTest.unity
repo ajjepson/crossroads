@@ -903,7 +903,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 358a7f592bc507b44955c1aa994bbfb3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1792,6 +1792,10 @@ MonoBehaviour:
   arrowIce: 0
   arrowNormal: 0
   typeOfArrow: {fileID: 1882196800}
+  arrowImage: {fileID: 392392138}
+  fireSprite: {fileID: 21300000, guid: 56e9014f9a3cbc248986233f486389a0, type: 3}
+  iceSprite: {fileID: 21300000, guid: 9307b7503ed40004ab3b3fccd5cfa823, type: 3}
+  normalSprite: {fileID: 21300000, guid: 358a7f592bc507b44955c1aa994bbfb3, type: 3}
 --- !u!1 &724940344
 GameObject:
   m_ObjectHideFlags: 0
