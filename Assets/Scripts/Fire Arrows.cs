@@ -7,9 +7,9 @@ public class FireArrows : MonoBehaviour
     public Rigidbody fireArrow;
     public Rigidbody iceArrow;
     public Rigidbody arrow;
-    private float normalSpeed = 5;
-    private float fireSpeed = 7.5f;
-    private float iceSpeed = 2.5f;
+    private float normalSpeed = 7.5f;
+    private float fireSpeed = 10f;
+    private float iceSpeed = 5f;
     public bool arrowFire;
     public bool arrowIce;
     public bool arrowNormal;
@@ -66,19 +66,19 @@ public class FireArrows : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && arrowFire == true)
         {
             Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
-            fire.angularVelocity = transform.forward * fireSpeed;
+            fire.linearVelocity = transform.forward * fireSpeed;
             Destroy( fire.gameObject, 5f );
         }
         else if (Input.GetKeyDown(KeyCode.Space) && arrowIce == true)
         {
             Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
-            ice.angularVelocity = transform.forward * iceSpeed;
+            ice.linearVelocity = transform.forward * iceSpeed;
             Destroy(ice.gameObject, 5f);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && arrowNormal == true)
         {
             Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
-            normal.angularVelocity = transform.forward * normalSpeed;
+            normal.linearVelocity = transform.forward * normalSpeed;
             Destroy(normal.gameObject, 5f);
         }
         else
