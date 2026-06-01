@@ -36,6 +36,11 @@ public class SwordSwing : MonoBehaviour
                 //emeny take damage
                 Debug.Log("enemt took damage");
             }
+            if (other.CompareTag("BreakObject"))
+            {
+                Destroy(other.gameObject);
+                Debug.Log("Object Destroyed Object");
+            }
         }
     }
 }
