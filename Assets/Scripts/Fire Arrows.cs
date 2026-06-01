@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class FireArrows : MonoBehaviour
@@ -13,6 +14,11 @@ public class FireArrows : MonoBehaviour
     public bool arrowIce;
     public bool arrowNormal;
     public TMP_Text typeOfArrow;
+
+    public Image arrowImage;
+    public Sprite fireSprite;
+    public Sprite iceSprite;
+    public Sprite normalSprite;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +26,8 @@ public class FireArrows : MonoBehaviour
         arrowFire = false;
         arrowIce = false;
         arrowNormal = true;
+        //arrowImage = GetComponent<Image>();
+        arrowImage.sprite = normalSprite;
     }
 
     // Update is called once per frame
@@ -30,6 +38,7 @@ public class FireArrows : MonoBehaviour
             //fire arrow is selected
             Debug.Log("fire");
             typeOfArrow.text = "Fire";
+            arrowImage.sprite = fireSprite;
             arrowFire = true;
             arrowIce = false;
             arrowNormal = false;
@@ -38,6 +47,7 @@ public class FireArrows : MonoBehaviour
         {
             //ice arrow is selected
             Debug.Log("ice");
+            arrowImage.sprite = iceSprite;
             typeOfArrow.text = "Ice";
             arrowFire = false;
             arrowIce = true;
@@ -47,6 +57,7 @@ public class FireArrows : MonoBehaviour
         {
             //normal arrow is selected
             Debug.Log("normal");
+            arrowImage.sprite = normalSprite;
             typeOfArrow.text = "Normal";
             arrowFire = false;
             arrowIce = false;
