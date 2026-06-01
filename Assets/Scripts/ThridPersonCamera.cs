@@ -8,8 +8,8 @@ public class ThridPersonCamera : MonoBehaviour
     private bool cursorLocked = true;
 
     public float mouseSensitivity = 200f;
-    public float distance = 6f;
-    public float height = 2f;
+    private float distance = 18f;
+    private float height = 7f;
 
     public float minY = -30f;
     public float maxY = 60f;
