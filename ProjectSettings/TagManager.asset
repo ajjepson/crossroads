@@ -7,6 +7,9 @@ TagManager:
   - enemy
   - Help1
   - Help2
+  - Help3
+  - BreakObject
+  - Heal
   layers:
   - Default
   - TransparentFX
