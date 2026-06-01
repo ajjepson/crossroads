@@ -31,5 +31,15 @@ public class HealthScript : MonoBehaviour
                 health = health - 10;
             }
         }
+        if (other.CompareTag("Heal"))
+        {
+            //you heal damage
+            if (health > 0 && health < 90)
+            {
+                Debug.Log("you Healed");
+                health = health + 10;
+                Destroy(GameObject.FindWithTag("Heal"));
+            }
+        }
     }
 }

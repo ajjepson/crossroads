@@ -25,6 +25,10 @@ public class HowToPlay : MonoBehaviour
         {
             howToPlayText.text = "as the knight use left mouse button to swing sword";
         }
+        else if (other.CompareTag("Help3"))
+        {
+            howToPlayText.text = "Try attcking that box";
+        }
         else
         {
             howToPlayText.text = "";
