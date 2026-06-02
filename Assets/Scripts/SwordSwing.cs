@@ -30,7 +30,7 @@ public class SwordSwing : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-      if (attacking && other.CompareTag("Enemy"))
+      if (attacking && other.CompareTag("enemy"))
         {
             Debug.Log("you hit an Enemy");
             //deal damage to enemy
@@ -39,7 +39,7 @@ public class SwordSwing : MonoBehaviour
             {
                 enemy.TakeDamage(damage);
             }
-            if (other.CompareTag("BreakObject"))
+            if (attacking && other.CompareTag("BreakObject"))
             {
                 Destroy(other.gameObject);
                 Debug.Log("Object Destroyed Object");

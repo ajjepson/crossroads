@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/HelpScreen.unity
     guid: ca5473e3b4e839d4fa3cf27206e3c4da
   - enabled: 1
+    path: Assets/Scenes/IsaiahTest.unity
+    guid: d10cbb9ca520edc4781af41b5a8ce969
+  - enabled: 1
+    path: Assets/Scenes/IsaiahTest2.unity
+    guid: e3317bfab19db7349b698df08861d372
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
