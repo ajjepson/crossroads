@@ -22,7 +22,7 @@ public class HealthScript : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("enemy"))
         {
             //you take damage
             if (health > 0)
