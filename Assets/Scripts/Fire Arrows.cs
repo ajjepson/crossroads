@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class FireArrows : MonoBehaviour
@@ -6,13 +7,18 @@ public class FireArrows : MonoBehaviour
     public Rigidbody fireArrow;
     public Rigidbody iceArrow;
     public Rigidbody arrow;
-    private float normalSpeed = 5;
-    private float fireSpeed = 7.5f;
-    private float iceSpeed = 2.5f;
+    private float normalSpeed = 7.5f;
+    private float fireSpeed = 10f;
+    private float iceSpeed = 5f;
     public bool arrowFire;
     public bool arrowIce;
     public bool arrowNormal;
     public TMP_Text typeOfArrow;
+
+    public Image arrowImage;
+    public Sprite fireSprite;
+    public Sprite iceSprite;
+    public Sprite normalSprite;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +26,8 @@ public class FireArrows : MonoBehaviour
         arrowFire = false;
         arrowIce = false;
         arrowNormal = true;
+        //arrowImage = GetComponent<Image>();
+        arrowImage.sprite = normalSprite;
     }
 
     // Update is called once per frame
@@ -30,6 +38,7 @@ public class FireArrows : MonoBehaviour
             //fire arrow is selected
             Debug.Log("fire");
             typeOfArrow.text = "Fire";
+            arrowImage.sprite = fireSprite;
             arrowFire = true;
             arrowIce = false;
             arrowNormal = false;
@@ -38,6 +47,7 @@ public class FireArrows : MonoBehaviour
         {
             //ice arrow is selected
             Debug.Log("ice");
+            arrowImage.sprite = iceSprite;
             typeOfArrow.text = "Ice";
             arrowFire = false;
             arrowIce = true;
@@ -47,6 +57,7 @@ public class FireArrows : MonoBehaviour
         {
             //normal arrow is selected
             Debug.Log("normal");
+            arrowImage.sprite = normalSprite;
             typeOfArrow.text = "Normal";
             arrowFire = false;
             arrowIce = false;
@@ -55,19 +66,19 @@ public class FireArrows : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && arrowFire == true)
         {
             Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
-            fire.angularVelocity = transform.forward * fireSpeed;
+            fire.linearVelocity = transform.forward * fireSpeed;
             Destroy( fire.gameObject, 5f );
         }
         else if (Input.GetKeyDown(KeyCode.Space) && arrowIce == true)
         {
             Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
-            ice.angularVelocity = transform.forward * iceSpeed;
+            ice.linearVelocity = transform.forward * iceSpeed;
             Destroy(ice.gameObject, 5f);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && arrowNormal == true)
         {
             Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
-            normal.angularVelocity = transform.forward * normalSpeed;
+            normal.linearVelocity = transform.forward * normalSpeed;
             Destroy(normal.gameObject, 5f);
         }
         else

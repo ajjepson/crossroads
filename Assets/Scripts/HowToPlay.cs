@@ -29,9 +29,13 @@ public class HowToPlay : MonoBehaviour
         {
             howToPlayText.text = "Try attcking that box";
         }
+        else if (other.CompareTag("Help4"))
+        {
+            howToPlayText.text = "as the archer use Space bar to shot arrows, pressing 1,2,3 keys switches the type of arrow";
+        }
         else
         {
-            howToPlayText.text = "";
+            //
         }
     }
 }

@@ -20,7 +20,8 @@ public class UiManager : MonoBehaviour
     }
     public void HelpButton()
     {
-        SceneManager.LoadScene("HelpScreen");
+        // Changed it to Isaiah Test SceneManager.LoadScene("HelpScreen");
+        SceneManager.LoadScene("IsaiahTest");
     }
     public void MenuButton()
     {
