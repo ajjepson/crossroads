@@ -45,7 +45,6 @@ public class SkeletonController : MonoBehaviour
         if (currentState == EnemyState.Chase) Chase();
         if (currentState == EnemyState.Attack) Attack();
 
-        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(50);
     }
 
     void Patrol()
