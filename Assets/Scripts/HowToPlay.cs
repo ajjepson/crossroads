@@ -7,7 +7,7 @@ public class HowToPlay : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        howToPlayText.text = "How to Play: Use WASD or The arrow Keys To move";
+        //howToPlayText.text = "How to Play: Use WASD or The arrow Keys To move";
     }
 
     // Update is called once per frame
