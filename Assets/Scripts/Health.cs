@@ -4,9 +4,9 @@ using TMPro;
 
 public class Health : MonoBehaviour
 {
-       public float health = 100f;
+    public float health = 100f;
     public float maxHealth = 100f;
-   
+
     public Image healthBar;
     public TextMeshProUGUI healthText;
 
@@ -35,9 +35,9 @@ public class Health : MonoBehaviour
     {
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthBarUI(); 
+        UpdateHealthBarUI();
 
-       healthBar.fillAmount = health / maxHealth;
+        healthBar.fillAmount = health / maxHealth;
 
         if (health <= 0)
         {
@@ -54,11 +54,11 @@ public class Health : MonoBehaviour
     {
         float percent = health / maxHealth;
 
-     
+
         if (healthBar != null)
             healthBar.fillAmount = percent;
 
-     
+
         if (healthText != null)
             healthText.text = $"{gameObject.name} HP: {Mathf.RoundToInt(health)}";
 
@@ -71,5 +71,17 @@ public class Health : MonoBehaviour
                 healthBar.color = Color.yellow;
             else
                 healthBar.color = Color.red;
-        }  }
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        //you heal damage
+        if (health > 0 && health < 90)
+        {
+            Debug.Log("you Healed");
+            health = health + 10;
+            Destroy(GameObject.FindWithTag("Heal"));
+        }
+    }
+
 }
