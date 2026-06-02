@@ -9,11 +9,13 @@ public class FireArrows : MonoBehaviour
     public Rigidbody arrow;
     private float normalSpeed = 7.5f;
     private float fireSpeed = 10f;
+    private int fireCount = 30;
     private float iceSpeed = 5f;
     public bool arrowFire;
     public bool arrowIce;
     public bool arrowNormal;
     public TMP_Text typeOfArrow;
+    public TMP_Text amount;
 
     public Image arrowImage;
     public Sprite fireSprite;
@@ -22,6 +24,8 @@ public class FireArrows : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        amount.text = fireCount.ToString();
+        amount.enabled = false;
         typeOfArrow.text = "Normal";
         arrowFire = false;
         arrowIce = false;
@@ -33,9 +37,11 @@ public class FireArrows : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        amount.text = fireCount.ToString();
         if (Input.GetKeyDown(KeyCode.Alpha1)) //1 key
         {
             //fire arrow is selected
+            amount.enabled = true;
             Debug.Log("fire");
             typeOfArrow.text = "Fire";
             arrowImage.sprite = fireSprite;
@@ -47,6 +53,7 @@ public class FireArrows : MonoBehaviour
         {
             //ice arrow is selected
             Debug.Log("ice");
+            amount.enabled = false;
             arrowImage.sprite = iceSprite;
             typeOfArrow.text = "Ice";
             arrowFire = false;
@@ -56,6 +63,7 @@ public class FireArrows : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Alpha3)) //3 key
         {
             //normal arrow is selected
+            amount.enabled = false;
             Debug.Log("normal");
             arrowImage.sprite = normalSprite;
             typeOfArrow.text = "Normal";
@@ -65,9 +73,19 @@ public class FireArrows : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) && arrowFire == true)
         {
-            Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
-            fire.linearVelocity = transform.forward * fireSpeed;
-            Destroy( fire.gameObject, 5f );
+            if (fireCount <= 0)
+            {
+                //cant fire
+                Debug.Log("bullets:" + fireCount);
+            }
+            else
+            {
+                Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
+                fire.linearVelocity = transform.forward * fireSpeed;
+                Destroy(fire.gameObject, 5f);
+                fireCount -= 1;
+                Debug.Log("bullets:" + fireCount);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Space) && arrowIce == true)
         {
