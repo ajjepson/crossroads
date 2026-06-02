@@ -5,7 +5,7 @@ using System.Collections;
 public class charcontrol : MonoBehaviour
 {
     //knight
-    private float playerSpeed = 2.5f;
+    private float playerSpeed = 7f;
     private float gravityValue = -9.81f;
 
     private CharacterController controller;

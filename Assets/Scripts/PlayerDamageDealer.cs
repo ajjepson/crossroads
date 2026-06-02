@@ -16,7 +16,7 @@ public class PlayerDamageDealer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        PlayerHealth player = other.GetComponent<PlayerHealth>();
+        Health player = other.GetComponent<Health>();
 
         if (player != null)
         {
