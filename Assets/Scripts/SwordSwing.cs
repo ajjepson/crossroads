@@ -5,6 +5,7 @@ public class SwordSwing : MonoBehaviour
     private Animator animator;
     public bool attacking;
     public int damage = 10;
+    private bool hasHitEnemyThisSwing;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +21,7 @@ public class SwordSwing : MonoBehaviour
         {
             animator.SetBool("SwingSword", true);
             attacking = true;
+            hasHitEnemyThisSwing = false; 
             Invoke("SwingDelay", 2);
         }
     }
@@ -30,20 +32,25 @@ public class SwordSwing : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-      if (attacking && other.CompareTag("enemy"))
+        if (!attacking) return;
+        if (other.CompareTag("Enemy") && !hasHitEnemyThisSwing)
         {
-            Debug.Log("you hit an Enemy");
-            //deal damage to enemy
+            Debug.Log("You hit an Enemy");
+
             SkeletonController enemy = other.GetComponent<SkeletonController>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
-            }
-            if (attacking && other.CompareTag("BreakObject"))
-            {
-                Destroy(other.gameObject);
-                Debug.Log("Object Destroyed Object");
+                hasHitEnemyThisSwing = true;
             }
         }
+
+        if (other.CompareTag("BreakObject"))
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Object Destroyed");
+        }
     }
+
 }
+
