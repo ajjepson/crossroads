@@ -28,7 +28,7 @@ public class HealItem : MonoBehaviour
                     Instantiate(healthPickup, transform.position, Quaternion.identity);
                 }
             }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }
