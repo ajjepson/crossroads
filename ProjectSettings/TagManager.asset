@@ -11,6 +11,7 @@ TagManager:
   - BreakObject
   - Heal
   - Help4
+  - Rope
   layers:
   - Default
   - TransparentFX
