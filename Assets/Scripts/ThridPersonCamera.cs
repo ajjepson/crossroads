@@ -19,12 +19,13 @@ public class ThridPersonCamera : MonoBehaviour
 
     private void Start()
     {
-        LockCursor();
+        //LockCursor();
     }
 
     private void Update()
     {
         // press esc to toggle cursor lock
+        /*
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (cursorLocked)
@@ -36,6 +37,7 @@ public class ThridPersonCamera : MonoBehaviour
                 LockCursor();
             }
         }
+        */
     }
 
     private void LateUpdate()
@@ -61,7 +63,7 @@ public class ThridPersonCamera : MonoBehaviour
         //transform.LookAt(target.position + Vector3.up * 1.5f);
         transform.LookAt(target.position);
     }
-
+    /*
     void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -75,4 +77,5 @@ public class ThridPersonCamera : MonoBehaviour
         Cursor.visible = true;
         cursorLocked = false;
     }
+    */
 }
