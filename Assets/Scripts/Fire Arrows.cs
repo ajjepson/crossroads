@@ -21,6 +21,9 @@ public class FireArrows : MonoBehaviour
     public Sprite fireSprite;
     public Sprite iceSprite;
     public Sprite normalSprite;
+    //for level 1-2
+    public int ropecut = 0;
+    //
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -102,6 +105,15 @@ public class FireArrows : MonoBehaviour
         else
         {
             //no arrow was fired
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Rope"))
+        {
+            ropecut += 1;
+            Debug.Log(ropecut);
+            Destroy(other.gameObject);
         }
     }
 }
