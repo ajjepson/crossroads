@@ -16,6 +16,7 @@ public class SwordSwing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(attacking);
         //left click
         if (Input.GetMouseButtonDown(0))
         {
@@ -33,7 +34,7 @@ public class SwordSwing : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!attacking) return;
-        if (other.CompareTag("Enemy") && !hasHitEnemyThisSwing)
+        if (other.CompareTag("enemy") && !hasHitEnemyThisSwing)
         {
             Debug.Log("You hit an Enemy");
 
@@ -45,7 +46,7 @@ public class SwordSwing : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("BreakObject"))
+        if (other.CompareTag("BreakObject") && attacking == true)
         {
             Destroy(other.gameObject);
             Debug.Log("Object Destroyed");
