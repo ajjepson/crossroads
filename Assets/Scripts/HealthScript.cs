@@ -8,6 +8,7 @@ public class HealthScript : MonoBehaviour
     public TMP_Text playerHealth;
     public int health = 150;
     public int maxHealth = 0;
+    public bool sheildActive = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,13 +18,30 @@ public class HealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(sheildActive);
         playerHealth.text = health + " / " + maxHealth;
         healthBar.value = (float)health / (float)maxHealth;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (sheildActive == false)
+            {
+                sheildActive = true;
+                Invoke("coolDown", 1);
+            }
+        }
+    }
+    public void coolDown()
+    {
+        sheildActive = false;
     }
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
         {
+            if (sheildActive == true)
+            {
+                //take no damage
+            }
             //you take damage
             if (health > 0)
             {
