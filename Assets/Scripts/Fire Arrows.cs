@@ -74,7 +74,7 @@ public class FireArrows : MonoBehaviour
             arrowIce = false;
             arrowNormal = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && arrowFire == true)
+        if (Input.GetMouseButtonDown(1) && arrowFire == true)
         {
             if (fireCount <= 0)
             {
@@ -90,13 +90,13 @@ public class FireArrows : MonoBehaviour
                 Debug.Log("bullets:" + fireCount);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && arrowIce == true)
+        else if (Input.GetMouseButtonDown(1) && arrowIce == true)
         {
             Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
             ice.linearVelocity = transform.forward * iceSpeed;
             Destroy(ice.gameObject, 5f);
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && arrowNormal == true)
+        else if (Input.GetMouseButtonDown(1) && arrowNormal == true)
         {
             Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
             normal.linearVelocity = transform.forward * normalSpeed;
