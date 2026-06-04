@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class ChaControl2 : MonoBehaviour
 {
     //archer character
-    private float playerSpeed = 12f;
+    private float playerSpeed = 9f;
     private float gravityValue = -9.81f;
 
     private CharacterController controller;
