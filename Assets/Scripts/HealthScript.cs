@@ -7,7 +7,7 @@ public class HealthScript : MonoBehaviour
 {
     public Slider healthBar;
     public TMP_Text playerHealth;
-    public int health = 150;
+    private int health = 150;
     public int maxHealth = 0;
     public bool sheildActive = false;
     //new
