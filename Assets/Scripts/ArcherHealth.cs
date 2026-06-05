@@ -6,7 +6,7 @@ public class ArcherHealth : MonoBehaviour
 {
     public Slider ArchhealthBar;
     public TMP_Text playerHealth;
-    public int ArchHealth = 100;
+    private int ArchHealth = 100;
     public int ArchersmaxHealth = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
