@@ -18,7 +18,7 @@ public class HealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(sheildActive);
+        //Debug.Log(sheildActive);
         playerHealth.text = health + " / " + maxHealth;
         healthBar.value = (float)health / (float)maxHealth;
         if (Input.GetKeyDown(KeyCode.Space))
