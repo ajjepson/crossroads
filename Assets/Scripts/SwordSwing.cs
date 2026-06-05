@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SwordSwing : MonoBehaviour
 {
@@ -6,10 +9,16 @@ public class SwordSwing : MonoBehaviour
     public bool attacking;
     public int damage = 10;
     private bool hasHitEnemyThisSwing;
+    //new
+    public float swingCoolDown = 3f;
+    public bool canPlayerSwing = true;
+    public bool swingHitbox = false;
+
+    public Image swordImage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attacking = false;
+        //attacking = false;
         animator = GetComponent<Animator>();
     }
 
@@ -18,12 +27,14 @@ public class SwordSwing : MonoBehaviour
     {
         //Debug.Log(attacking);
         //left click
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canPlayerSwing == true)
         {
-            animator.SetBool("SwingSword", true);
-            attacking = true;
-            hasHitEnemyThisSwing = false; 
-            Invoke("SwingDelay", 2);
+            //New got rid 0f animator.SetBool("SwingSword", true);
+            //New got rid 0f attacking = true;
+            //New got rid 0f hasHitEnemyThisSwing = false;
+            //New got rid of Invoke("SwingDelay", 2);
+            //new
+            StartCoroutine(SwordAttack());
         }
     }
     void SwingDelay()
@@ -31,9 +42,30 @@ public class SwordSwing : MonoBehaviour
         animator.SetBool("SwingSword", false);
         attacking = false;
     }
+    private IEnumerator SwordAttack()
+    {
+        canPlayerSwing = false;
+        swingHitbox = true;
+        animator.SetTrigger("SwordTrigger");
+        //animator.SetBool("SwingSword", true);
+        swordImage.fillAmount = 0f;
+        float countdown = 0f;
+        while (countdown < swingCoolDown)
+        {
+            countdown += Time.deltaTime;
+            swordImage.fillAmount = (countdown / swingCoolDown);
+            yield return null;
+
+        }
+        swordImage.fillAmount = 1f;
+        swingHitbox = false;
+        //animator.SetBool("SwingSword", false);
+        canPlayerSwing = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (!attacking) return;
+        //New got rid 0f (!attacking) return;
+        /*
         if (other.CompareTag("enemy") && !hasHitEnemyThisSwing)
         {
             Debug.Log("You hit an Enemy");
@@ -45,8 +77,25 @@ public class SwordSwing : MonoBehaviour
                 hasHitEnemyThisSwing = true;
             }
         }
-
         if (other.CompareTag("BreakObject") && attacking == true)
+        {
+            Destroy(other.gameObject);
+            Debug.Log("Object Destroyed");
+        }
+        */
+        if (other.CompareTag("enemy") && canPlayerSwing == true )
+        {
+            Debug.Log("You hit an Enemy");
+
+            SkeletonController enemy = other.GetComponent<SkeletonController>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                //hasHitEnemyThisSwing = true;
+            }
+        }
+
+        if (other.CompareTag("BreakObject") && canPlayerSwing == true)
         {
             Destroy(other.gameObject);
             Debug.Log("Object Destroyed");
