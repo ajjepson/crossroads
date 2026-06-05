@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class FireArrows : MonoBehaviour
 {
@@ -24,6 +25,13 @@ public class FireArrows : MonoBehaviour
     //for level 1-2
     public int ropecut = 0;
     //
+    //new
+    public float arrowsCoolDown = 1f;
+    public bool canPlayerShoot = true;
+    public bool arrowsHitbox = false;
+
+    public Image arrowsImage;
+    //new
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -74,38 +82,71 @@ public class FireArrows : MonoBehaviour
             arrowIce = false;
             arrowNormal = true;
         }
-        if (Input.GetMouseButtonDown(1) && arrowFire == true)
+        if (Input.GetMouseButtonDown(1) && canPlayerShoot == true)
         {
-            if (fireCount <= 0)
+            StartCoroutine(ArrowsAttack());
+
+            if (Input.GetMouseButtonDown(1) && arrowFire == true)
             {
-                //cant fire
-                Debug.Log("bullets:" + fireCount);
+                //New
+                //StartCoroutine(ArrowsAttack());
+                //New
+                if (fireCount <= 0)
+                {
+                    //cant fire
+                    Debug.Log("bullets:" + fireCount);
+                }
+                else
+                {
+                    Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
+                    fire.linearVelocity = transform.forward * fireSpeed;
+                    Destroy(fire.gameObject, 5f);
+                    fireCount -= 1;
+                    Debug.Log("bullets:" + fireCount);
+                }
+            }
+            else if (Input.GetMouseButtonDown(1) && arrowIce == true)
+            {
+                //New
+                //StartCoroutine(ArrowsAttack());
+                //New
+
+                Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
+                ice.linearVelocity = transform.forward * iceSpeed;
+                Destroy(ice.gameObject, 5f);
+            }
+            else if (Input.GetMouseButtonDown(1) && arrowNormal == true)
+            {
+                //New
+                //StartCoroutine(ArrowsAttack());
+                //New
+
+                Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
+                normal.linearVelocity = transform.forward * normalSpeed;
+                Destroy(normal.gameObject, 5f);
             }
             else
             {
-                Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
-                fire.linearVelocity = transform.forward * fireSpeed;
-                Destroy(fire.gameObject, 5f);
-                fireCount -= 1;
-                Debug.Log("bullets:" + fireCount);
+                //no arrow was fired
             }
         }
-        else if (Input.GetMouseButtonDown(1) && arrowIce == true)
+    }
+    private IEnumerator ArrowsAttack()
+    {
+        canPlayerShoot = false;
+        arrowsHitbox = true;
+        arrowsImage.fillAmount = 0f;
+        float arrowCountdown = 0f;
+        while (arrowCountdown < arrowsCoolDown)
         {
-            Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
-            ice.linearVelocity = transform.forward * iceSpeed;
-            Destroy(ice.gameObject, 5f);
+            arrowCountdown += Time.deltaTime;
+            arrowsImage.fillAmount = (arrowCountdown / arrowsCoolDown);
+            yield return null;
+
         }
-        else if (Input.GetMouseButtonDown(1) && arrowNormal == true)
-        {
-            Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
-            normal.linearVelocity = transform.forward * normalSpeed;
-            Destroy(normal.gameObject, 5f);
-        }
-        else
-        {
-            //no arrow was fired
-        }
+        arrowsImage.fillAmount = 1f;
+        arrowsHitbox = false;
+        canPlayerShoot = true;
     }
     private void OnTriggerEnter(Collider other)
     {

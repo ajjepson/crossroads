@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections;
 
@@ -15,7 +17,13 @@ public class charcontrol : MonoBehaviour
     public Transform cameraTransform;
     ThridPersonCamera cam;
     //camera
-
+    //new
+    public float sprintLength = 3f;
+    public float playertiredness = 4f;
+    public bool canPlayerSprint = true;
+    private bool canSprint = false;
+    public Image sprintImage;
+    //new
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
 
@@ -75,5 +83,46 @@ public class charcontrol : MonoBehaviour
         // Combine horizontal and vertical movement
         Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
         controller.Move(finalMove * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift) && canPlayerSprint == true)
+        {
+            playerSpeed = 12f;
+            if (!canSprint)
+            {
+                StartCoroutine(Sprint());
+            }
+        }
+        else
+        {
+            playerSpeed = 9f;
+        }
+    }
+    private IEnumerator Sprint()
+    {
+        canSprint = true;
+        canPlayerSprint = false;
+        //yield return new WaitForSeconds(sheildLength);
+
+        float countUpTime = 0f;
+        sprintImage.fillAmount = 1f;
+
+        while (countUpTime < sprintLength)
+        {
+            countUpTime += Time.deltaTime;
+            sprintImage.fillAmount = 1f - (countUpTime / sprintLength);
+            yield return null;
+        }
+        //flip this to fill back up (replace countUpTime with countDownTime and sprintLength with playertiredness)
+        float countDownTime = 0f;
+        sprintImage.fillAmount = 0f;
+        while (countDownTime < playertiredness)
+        {
+            countDownTime += Time.deltaTime;
+            sprintImage.fillAmount = (countDownTime / playertiredness);
+            yield return null;
+        }
+        sprintImage.fillAmount = 1f;
+        canPlayerSprint = true;
+        canSprint = false;
     }
 }
