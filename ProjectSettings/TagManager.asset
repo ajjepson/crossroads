@@ -12,6 +12,8 @@ TagManager:
   - Heal
   - Help4
   - Rope
+  - Enemy
+  - Arrows
   layers:
   - Default
   - TransparentFX
