@@ -31,7 +31,7 @@ public class SpiderBoss : MonoBehaviour
     {
         spiderMaxHealth = spiderHealth;
         //new
-        swordSwing.canPlayerSwing = false;
+        //swordSwing.canPlayerSwing = false;
 
         currentState = EnemyAIActions.walking;
         agent = GetComponent<NavMeshAgent>();
