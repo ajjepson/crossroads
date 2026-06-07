@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class Health : MonoBehaviour
 {
@@ -9,6 +12,9 @@ public class Health : MonoBehaviour
 
     public Image healthBar;
     public TextMeshProUGUI healthText;
+    public float invulnerabilityDuration = 1f;
+    private bool isInvulnerable = false;
+    
 
 
     void Start()
@@ -30,25 +36,28 @@ public class Health : MonoBehaviour
         }
 
     }
-
     public void TakeDamage(float damage)
     {
+        if (isInvulnerable) return;
+
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthBarUI();
 
-        healthBar.fillAmount = health / maxHealth;
+        UpdateHealthBarUI();
 
         if (health <= 0)
         {
             Die();
         }
+
+        StartCoroutine(InvincibilityFrames());
     }
 
     void Die()
     {
         Debug.Log("Player died");
-        Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
     void UpdateHealthBarUI()
     {
@@ -73,15 +82,23 @@ public class Health : MonoBehaviour
                 healthBar.color = Color.red;
         }
     }
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        //you heal damage
-        if (health > 0 && health < 90)
+        if (other.CompareTag("enemy"))
         {
-            Debug.Log("you Healed");
-            health = health + 10;
-            Destroy(GameObject.FindWithTag("Heal"));
+            Debug.Log("Hit by enemy!");
+            TakeDamage(10f); // Damage amount
         }
     }
+    private IEnumerator InvincibilityFrames()
+    {
+        isInvulnerable = true;
+
+        yield return new WaitForSeconds(invulnerabilityDuration);
+
+        isInvulnerable = false;
+    }
+   
+    
 
 }
