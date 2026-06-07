@@ -1538,10 +1538,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 780411323842083077, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 720627964}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
 --- !u!1 &203844586
@@ -4651,7 +4648,7 @@ GameObject:
   - component: {fileID: 720627961}
   - component: {fileID: 720627966}
   - component: {fileID: 720627967}
-  - component: {fileID: 720627968}
+  - component: {fileID: 720627970}
   - component: {fileID: 720627969}
   m_Layer: 0
   m_Name: archerPlayer
@@ -4748,13 +4745,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720627959}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3499992, y: -0.32000053, z: -0.23999974}
+  m_LocalRotation: {x: -0, y: 0.69192076, z: -0, w: 0.7219735}
+  m_LocalPosition: {x: 9.1168995, y: 1.5599995, z: -64.93456}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 36652047}
-  m_Father: {fileID: 320364520}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 87.565, z: 0}
 --- !u!114 &720627966
 MonoBehaviour:
@@ -4800,19 +4797,6 @@ MonoBehaviour:
   canPlayerShoot: 1
   arrowsHitbox: 0
   arrowsImage: {fileID: 1832351132}
---- !u!114 &720627968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720627959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5f867ee3dbae647b91a2def44b713c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HowToPlay
-  howToPlayText: {fileID: 0}
 --- !u!114 &720627969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4822,15 +4806,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 720627959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f39a687863ef340b2245625936758b, type: 3}
+  m_Script: {fileID: 11500000, guid: 12aa818a15c44994993d05bc079de616, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::charcontrol
-  cameraTransform: {fileID: 961739753}
-  sprintLength: 3
-  playertiredness: 4
-  canPlayerSprint: 1
-  sprintImage: {fileID: 1238907796}
-  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::ArcherFollowing
+--- !u!195 &720627970
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720627959}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.50000006
+  m_Speed: 12
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &724940344
 GameObject:
   m_ObjectHideFlags: 0
@@ -6072,7 +6072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c809db6ffe5a64ea9fdc441e4c1ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThridPersonCamera
-  target: {fileID: 720627964}
+  target: {fileID: 320364520}
   mouseSensitivity: 200
   minY: -30
   maxY: 60
@@ -19866,6 +19866,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 203844589}
   - {fileID: 961739753}
+  - {fileID: 720627964}
   - {fileID: 190145191}
   - {fileID: 1772388466}
   - {fileID: 1377220119}
