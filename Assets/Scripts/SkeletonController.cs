@@ -7,11 +7,12 @@ public class SkeletonController : MonoBehaviour
     public EnemyState currentState;
 
     [Header("Setup")]
-    [SerializeField] private Transform pointA;
-    [SerializeField] private Transform pointB;
+    private Vector3 patrolCenter;
+    public float patrolRadius = 2f;
+    private Vector3 patrolTarget;
     [SerializeField] private Transform player;
     [SerializeField] private FloatingHealthBar healthBar;
-
+   
     [Header("Stats")]
     [SerializeField] private float speed = 2f;
     [SerializeField] private float sightRange = 10f;
@@ -27,10 +28,16 @@ public class SkeletonController : MonoBehaviour
     void Start()
     {
         health = maxHealth;
-
-        targetPoint = pointA; 
-
         healthBar?.UpdateBar(health, maxHealth);
+        if (player == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null)
+                player = p.transform;
+        }
+        
+
+        SetNewPatrolPoint();
     }
 
     void Update()
@@ -49,10 +56,22 @@ public class SkeletonController : MonoBehaviour
 
     void Patrol()
     {
-        Move(targetPoint.position);
+        Move(patrolTarget);
+        if (Vector3.Distance(transform.position, patrolTarget) < 0.5f)
+        {
+            SetNewPatrolPoint();
+        }
+       
+    }
+    void SetNewPatrolPoint()
+    {
+        Vector2 random = Random.insideUnitCircle * patrolRadius;
 
-        if (Vector3.Distance(transform.position, targetPoint.position) < 0.8f)
-            targetPoint = (targetPoint == pointA) ? pointB : pointA;
+        patrolTarget = new Vector3(
+            patrolCenter.x + random.x,
+            transform.position.y,
+            patrolCenter.z + random.y
+        );
     }
 
     void Chase()
@@ -91,18 +110,25 @@ public class SkeletonController : MonoBehaviour
     }
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        if (pointA) Gizmos.DrawWireSphere(pointA.position, 0.3f);
-
-        Gizmos.color = Color.red;
-        if (pointB) Gizmos.DrawWireSphere(pointB.position, 0.3f);
-
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
+
     }
+    public void SetPatrolArea(Vector3 center, float radius)
+
+    {
+        patrolCenter = center;
+        patrolRadius = radius;
+        SetNewPatrolPoint();
+
+    }
+
 
 }
 
