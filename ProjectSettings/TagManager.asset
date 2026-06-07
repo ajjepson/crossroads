@@ -14,6 +14,7 @@ TagManager:
   - Rope
   - Enemy
   - Arrows
+  - respawnPoint
   layers:
   - Default
   - TransparentFX
