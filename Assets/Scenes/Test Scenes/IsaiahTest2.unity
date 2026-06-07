@@ -38598,6 +38598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: archerPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3104072112944483730, guid: cf33d12296ed51946992e36b8c8834fb, type: 3}
+      propertyPath: m_TagString
+      value: archer
+      objectReference: {fileID: 0}
     - target: {fileID: 3891447085342357666, guid: cf33d12296ed51946992e36b8c8834fb, type: 3}
       propertyPath: playerHealth
       value: 
