@@ -23,8 +23,8 @@ public class SpiderBoss : MonoBehaviour
     private GameObject player;
     private float distanacePlayer;
 
-    private const float distanaceAttack = 2f;
-    private const float distanaceFollowing = 5.0f;
+    private const float distanaceAttack = 5f;
+    private const float distanaceFollowing = 20f;
     //new
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -101,7 +101,7 @@ public class SpiderBoss : MonoBehaviour
     //new
     public void OnTriggerEnter(Collider other)
     {
-        if (swordSwing.canPlayerSwing == true)
+        if (Input.GetMouseButtonDown(0))
         {
                 Debug.Log("spider took slice damage");
                 spiderHealth -= 10;
