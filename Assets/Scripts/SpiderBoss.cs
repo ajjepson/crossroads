@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SpiderBoss : MonoBehaviour
@@ -111,9 +112,9 @@ public class SpiderBoss : MonoBehaviour
             Debug.Log("spider took arrow damage");
             spiderHealth -= 5;
         }
-        if ( spiderHealth < 0)
+        if ( spiderHealth <= 0)
         {
-            //loads next level
+            SceneManager.LoadScene("2-1");
         }
     }
 }
