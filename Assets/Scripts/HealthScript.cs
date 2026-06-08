@@ -82,16 +82,31 @@ public class HealthScript : MonoBehaviour
             if (health > 0)
             {
                 Debug.Log("you took damage");
-                health = health - 10;
+                health -= 10;
             }
         }
+        if (other.CompareTag("spider"))
+        {
+            if (sheildActive)
+            {
+                //take no damage
+                return;
+            }
+            //you take damage
+            if (health > 0)
+            {
+                Debug.Log("you took damage");
+                health -= 15;
+            }
+        }
+
         if (other.CompareTag("Heal"))
         {
             //you heal damage
             if (health > 0 && health < 90)
             {
                 Debug.Log("you Healed");
-                health = health + 10;
+                health += 10;
                 Destroy(GameObject.FindWithTag("Heal"));
             }
         }

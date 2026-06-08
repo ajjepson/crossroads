@@ -16,6 +16,7 @@ TagManager:
   - Arrows
   - respawnPoint
   - archer
+  - spider
   layers:
   - Default
   - TransparentFX
