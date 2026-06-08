@@ -8,7 +8,7 @@ public class SpiderBoss : MonoBehaviour
 {
     public Slider spiderhealthBar;
     public TMP_Text spiderHealthText;
-    private int spiderHealth = 500;
+    private int spiderHealth = 200;
     public int spiderMaxHealth = 0;
     public SwordSwing swordSwing;
 
