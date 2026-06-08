@@ -25,10 +25,18 @@ public class ArcherHealth : MonoBehaviour
         if (other.CompareTag("enemy"))
         {
             //you take damage
-            if (ArchHealth > 0)
+            if (ArchHealth >= 0)
             {
                 Debug.Log("archer took damage");
-                ArchHealth = ArchHealth - 10;
+                ArchHealth -= 10;
+            }
+        }
+        if (other.CompareTag("spider"))
+        {
+            if (ArchHealth >= 0)
+            {
+                Debug.Log("archer took damage");
+                ArchHealth -= 15;
             }
         }
     }
