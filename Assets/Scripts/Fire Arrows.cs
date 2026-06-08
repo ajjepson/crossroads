@@ -148,13 +148,4 @@ public class FireArrows : MonoBehaviour
         arrowsHitbox = false;
         canPlayerShoot = true;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Rope"))
-        {
-            ropecut += 1;
-            Debug.Log(ropecut);
-            Destroy(other.gameObject);
-        }
-    }
 }

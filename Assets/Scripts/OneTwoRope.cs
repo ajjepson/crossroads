@@ -3,7 +3,7 @@ using UnityEngine;
 public class OneTwoRope : MonoBehaviour
 {
     private Animator animator;
-    public FireArrows FireArrows;
+    public ArrowsDamage ArrowsDamage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,7 +13,7 @@ public class OneTwoRope : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FireArrows.ropecut == 2)
+        if (ArrowsDamage.ropecut1 == 1)
         {
             animator.SetBool("BridgeFall", true);
         }
