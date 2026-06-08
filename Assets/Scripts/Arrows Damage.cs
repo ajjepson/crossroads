@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ArrowsDamage : MonoBehaviour
 {
-    public int ropecut = 0;
+    public static int ropecut1 = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,8 +19,8 @@ public class ArrowsDamage : MonoBehaviour
     {
         if (other.CompareTag("Rope"))
         {
-            ropecut += 1;
-            Debug.Log(ropecut);
+            ropecut1 += 1;
+            Debug.Log(ropecut1);
             Destroy(other.gameObject);
         }
         if (other.CompareTag("BreakObject"))
