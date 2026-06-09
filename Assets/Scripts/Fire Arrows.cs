@@ -51,14 +51,14 @@ public class FireArrows : MonoBehaviour
         amount.text = fireCount.ToString();
         if (Input.GetKeyDown(KeyCode.Alpha1)) //1 key
         {
-            //fire arrow is selected
-            amount.enabled = true;
-            Debug.Log("fire");
-            typeOfArrow.text = "Fire";
-            arrowImage.sprite = fireSprite;
-            arrowFire = true;
+            //normal arrow is selected
+            amount.enabled = false;
+            Debug.Log("normal");
+            arrowImage.sprite = normalSprite;
+            typeOfArrow.text = "Normal";
+            arrowFire = false;
             arrowIce = false;
-            arrowNormal = false;
+            arrowNormal = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) //2 key
         {
@@ -73,14 +73,14 @@ public class FireArrows : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Alpha3)) //3 key
         {
-            //normal arrow is selected
-            amount.enabled = false;
-            Debug.Log("normal");
-            arrowImage.sprite = normalSprite;
-            typeOfArrow.text = "Normal";
-            arrowFire = false;
+            //fire arrow is selected
+            amount.enabled = true;
+            Debug.Log("fire");
+            typeOfArrow.text = "Fire";
+            arrowImage.sprite = fireSprite;
+            arrowFire = true;
             arrowIce = false;
-            arrowNormal = true;
+            arrowNormal = false;
         }
         if (Input.GetMouseButtonDown(1) && canPlayerShoot == true)
         {
