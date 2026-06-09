@@ -8,7 +8,7 @@ public class SpiderBoss : MonoBehaviour
 {
     public Slider spiderhealthBar;
     public TMP_Text spiderHealthText;
-    private int spiderHealth = 200;
+    public int spiderHealth = 200;
     public int spiderMaxHealth = 0;
     public SwordSwing swordSwing;
 
@@ -45,6 +45,11 @@ public class SpiderBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spiderHealth <= 0)
+        {
+            SceneManager.LoadScene("2-1 Frozen Lake");
+        }
+
         spiderHealthText.text = spiderHealth + " / " + spiderMaxHealth;
         spiderhealthBar.value = (float)spiderHealth / (float)spiderMaxHealth;
 
@@ -102,19 +107,10 @@ public class SpiderBoss : MonoBehaviour
     //new
     public void OnTriggerEnter(Collider other)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-                Debug.Log("spider took slice damage");
-                spiderHealth -= 10;
-        }
         if (other.CompareTag("Arrows"))
         {
             Debug.Log("spider took arrow damage");
             spiderHealth -= 5;
-        }
-        if ( spiderHealth <= 0)
-        {
-            SceneManager.LoadScene("2-1 Frozen Lake");
         }
     }
 }
