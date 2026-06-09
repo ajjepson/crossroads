@@ -114,7 +114,7 @@ public class SpiderBoss : MonoBehaviour
         }
         if ( spiderHealth <= 0)
         {
-            SceneManager.LoadScene("2-1");
+            SceneManager.LoadScene("2-1 Frozen Lake");
         }
     }
 }
