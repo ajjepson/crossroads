@@ -39,5 +39,9 @@ public class ArcherHealth : MonoBehaviour
                 ArchHealth -= 15;
             }
         }
+        if (other.CompareTag("Ice"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

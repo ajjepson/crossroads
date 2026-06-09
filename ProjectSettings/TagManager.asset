@@ -17,6 +17,7 @@ TagManager:
   - respawnPoint
   - archer
   - spider
+  - Ice
   layers:
   - Default
   - TransparentFX
