@@ -8,7 +8,7 @@ public class FinalBoss : MonoBehaviour
 {
     public Slider finalhealthBar;
     public TMP_Text finalHealthText;
-    private int finalHealth = 400;
+    public int finalHealth = 400;
     public int finalMaxHealth = 0;
     public SwordSwing swordSwing;
 
@@ -56,6 +56,11 @@ public class FinalBoss : MonoBehaviour
         DetermineCurrentState();
         FollowingCurrentState();
         //new
+
+        if (finalHealth <= 0)
+        {
+            //SceneManager.LoadScene("end");
+        }
     }
     //new
     private void DetermineCurrentState()
@@ -102,19 +107,10 @@ public class FinalBoss : MonoBehaviour
     //new
     public void OnTriggerEnter(Collider other)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("boss took slice damage");
-            finalHealth -= 10;
-        }
         if (other.CompareTag("Arrows"))
         {
             Debug.Log("boss took arrow damage");
             finalHealth -= 5;
-        }
-        if (finalHealth <= 0)
-        {
-            //SceneManager.LoadScene("end");
         }
     }
 }

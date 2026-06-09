@@ -15,6 +15,10 @@ public class SwordSwing : MonoBehaviour
     public bool swingHitbox = false;
 
     public Image swordImage;
+
+    public FinalBoss FinalBoss;
+    public SpiderBoss SpiderBoss;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -83,7 +87,7 @@ public class SwordSwing : MonoBehaviour
             Debug.Log("Object Destroyed");
         }
         */
-        if (other.CompareTag("enemy") && canPlayerSwing == true )
+        if (other.CompareTag("enemy") && /*replaced canPlayerSwing*/ swingHitbox == true )
         {
             Debug.Log("You hit an Enemy");
 
@@ -95,7 +99,20 @@ public class SwordSwing : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("BreakObject") && canPlayerSwing == true)
+        if (other.CompareTag("spider") && swingHitbox == true)
+        {
+            Debug.Log("You hit an spider");
+            if (SpiderBoss != null)
+            SpiderBoss.spiderHealth -= 10;
+        }
+        if (other.CompareTag("Boss") && swingHitbox == true)
+        {
+            Debug.Log("You hit an boss");
+            if (FinalBoss != null)
+                FinalBoss.finalHealth -= 10;
+        }
+
+        if (other.CompareTag("BreakObject") && swingHitbox == true)
         {
             Destroy(other.gameObject);
             Debug.Log("Object Destroyed");
