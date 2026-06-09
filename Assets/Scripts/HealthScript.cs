@@ -110,5 +110,6 @@ public class HealthScript : MonoBehaviour
                 Destroy(GameObject.FindWithTag("Heal"));
             }
         }
+
     }
 }
