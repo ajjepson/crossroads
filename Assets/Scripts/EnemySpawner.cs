@@ -5,8 +5,12 @@ public class EnemySpawner : MonoBehaviour
 {
 
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform spawnPoint;
+    [Header("Spawn Settings")]
+    [SerializeField] private int maxEnemies = 5;
     [SerializeField] private float spawnInterval = 3f;
+    [SerializeField] private Vector3 areaSize = new Vector3(10f, 0f, 10f);
+    private int currentEnemies;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,23 +30,34 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            Vector3 randomOffset = new Vector3(
-                Random.Range(-5f, 5f),
-                0,
-                Random.Range(-5f, 5f)
-            );
-
-            Instantiate(enemyPrefab, spawnPoint.position + randomOffset, Quaternion.identity);
+            if (currentEnemies < maxEnemies)
+            {
+                SpawnEnemy();
+            }
 
             yield return new WaitForSeconds(spawnInterval);
         }
     }
+    void SpawnEnemy()
+    {
+        Vector3 randomPos = transform.position + new Vector3(
+            Random.Range(-areaSize.x / 2, areaSize.x / 2),
+            0,
+            Random.Range(-areaSize.z / 2, areaSize.z / 2)
+        );
+
+        GameObject enemy = Instantiate(enemyPrefab, randomPos, Quaternion.identity);
+
+        currentEnemies++;
+
+
+    }
+
     private void OnDrawGizmos()
     {
-        if (spawnPoint == null) return;
-
+        
         // Random spawn area
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(spawnPoint.position, 1f);
+        Gizmos.DrawWireCube(transform.position, areaSize);
     }
 }
