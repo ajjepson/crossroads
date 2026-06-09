@@ -29,6 +29,10 @@ public class TreeFallScript : MonoBehaviour
     {
         animator.SetTrigger("TreeFell2");
     }
+    public void SnowFall()
+    {
+        animator.SetTrigger("SnowFell");
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -44,6 +48,10 @@ public class TreeFallScript : MonoBehaviour
             }
 
             //TreeFell2
+        }
+        if (other.CompareTag("Arrows"))
+        {
+            SnowFall();
         }
         //hiddenBox.SetActive(true);
         //animator.SetTrigger("TreeFall");
