@@ -42,6 +42,7 @@ public class SkeletonController : MonoBehaviour
 
     void Update()
     {
+        patrolCenter = transform.position;
         float dist = Vector3.Distance(transform.position, player.position);
 
         if (dist <= attackRange) currentState = EnemyState.Attack;
@@ -65,13 +66,12 @@ public class SkeletonController : MonoBehaviour
     }
     void SetNewPatrolPoint()
     {
-        Vector2 random = Random.insideUnitCircle * patrolRadius;
+        Vector2 random = Random.insideUnitCircle.normalized * Random.Range(1f, patrolRadius);
 
         patrolTarget = new Vector3(
             patrolCenter.x + random.x,
             transform.position.y,
-            patrolCenter.z + random.y
-        );
+            patrolCenter.z + random.y);
     }
 
     void Chase()
