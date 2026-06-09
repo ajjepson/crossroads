@@ -18,6 +18,7 @@ TagManager:
   - archer
   - spider
   - Ice
+  - Boss
   layers:
   - Default
   - TransparentFX

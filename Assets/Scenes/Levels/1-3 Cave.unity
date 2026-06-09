@@ -1553,6 +1553,10 @@ PrefabInstance:
       value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: SpiderBoss
+      value: 
+      objectReference: {fileID: 1775355294}
+    - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: swordImage
       value: 
       objectReference: {fileID: 370161152}
@@ -3366,6 +3370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpiderBoss
   spiderhealthBar: {fileID: 368220821}
   spiderHealthText: {fileID: 547334979}
+  spiderHealth: 200
   spiderMaxHealth: 0
   swordSwing: {fileID: 132756843}
   checkpoints:
@@ -18274,6 +18279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpiderBoss
   spiderhealthBar: {fileID: 368220821}
   spiderHealthText: {fileID: 547334979}
+  spiderHealth: 200
   spiderMaxHealth: 0
   swordSwing: {fileID: 132756843}
   checkpoints:

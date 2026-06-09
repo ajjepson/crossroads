@@ -760,6 +760,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: FinalBoss
+      value: 
+      objectReference: {fileID: 1463560321}
+    - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: swordImage
       value: 
       objectReference: {fileID: 370161152}
@@ -785,7 +789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46.3
+      value: 120.76466
       objectReference: {fileID: 0}
     - target: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -793,7 +797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -319.4
+      value: -316.2295
       objectReference: {fileID: 0}
     - target: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1484,6 +1488,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d15c54921fa6fc943b7b726be5e0d1a5, type: 3}
       propertyPath: m_Name
       value: IceArrow (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d15c54921fa6fc943b7b726be5e0d1a5, type: 3}
+      propertyPath: m_TagString
+      value: Arrows
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2373,7 +2381,7 @@ Transform:
   m_GameObject: {fileID: 720627959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.69192076, z: -0, w: 0.7219735}
-  m_LocalPosition: {x: 46.045345, y: 44.28, z: -319.06052}
+  m_LocalPosition: {x: 120.51, y: 44.28, z: -315.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8519,9 +8527,11 @@ GameObject:
   - component: {fileID: 1463560318}
   - component: {fileID: 1463560322}
   - component: {fileID: 1463560321}
+  - component: {fileID: 1463560323}
+  - component: {fileID: 1463560324}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8592,7 +8602,7 @@ Transform:
   m_GameObject: {fileID: 1463560317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 126.8, y: 42.2, z: -315.4}
+  m_LocalPosition: {x: 126.8, y: 42.49, z: -315.4}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8612,6 +8622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FinalBoss
   finalhealthBar: {fileID: 368220821}
   finalHealthText: {fileID: 547334979}
+  finalHealth: 400
   finalMaxHealth: 0
   swordSwing: {fileID: 190145192}
   checkpoints:
@@ -8641,6 +8652,48 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &1463560323
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463560317}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7781464, y: 2, z: 1.9431458}
+  m_Center: {x: -0.003944397, y: 0, z: -0.03640442}
+--- !u!65 &1463560324
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463560317}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1482991731
 GameObject:
   m_ObjectHideFlags: 0
@@ -8866,6 +8919,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1ea88c9b95943274d9685f466b4fcc34, type: 3}
       propertyPath: m_Name
       value: MetalArrow (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1ea88c9b95943274d9685f466b4fcc34, type: 3}
+      propertyPath: m_TagString
+      value: Arrows
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13925,6 +13982,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c8ac535ccb65f8f49ad982769ba94dcc, type: 3}
       propertyPath: m_Name
       value: FireArrow (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8ac535ccb65f8f49ad982769ba94dcc, type: 3}
+      propertyPath: m_TagString
+      value: Arrows
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
