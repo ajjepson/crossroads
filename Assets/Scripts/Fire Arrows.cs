@@ -124,7 +124,7 @@ public class FireArrows : MonoBehaviour
                Quaternion.identity
            );
             projectile.transform.forward = direction;
-            projectile.velocity = direction * speed;
+            projectile.linearVelocity = direction * speed;
             Destroy(projectile.gameObject, 5f);
 
 
