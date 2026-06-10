@@ -1103,6 +1103,8 @@ MonoBehaviour:
   UIPopUp: {fileID: 1926737325}
   interactionText: Press E to interact
   popupText: {fileID: 1548028216}
+  spinSpeed: 100
+  healAmount: 25
 --- !u!1001 &857779290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2445,7 +2447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Press E to interact
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2511,7 +2513,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -221.27612, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2541,7 +2543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40.899902, y: -10.763672}
+  m_AnchoredPosition: {x: -49, y: -10.763672}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1549514386 stripped
@@ -2839,14 +2841,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d036aca4e5d353349acd71c67d81f5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthScript
-  healthBar: {fileID: 0}
+  health: 100
+  maxHealth: 100
+  healthBarFill: {fileID: 729518781}
   playerHealth: {fileID: 1861087997}
-  maxHealth: 0
-  sheildActive: 0
-  sheildLength: 3
-  sheildNotActive: 4
-  canPlayerSheild: 1
-  sheildImage: {fileID: 0}
+  shieldActive: 0
+  canUseShield: 1
+  shieldDuration: 3
+  shieldCooldown: 4
+  shieldImage: {fileID: 0}
+  invulnerabilityDuration: 1
 --- !u!114 &1586977015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2854,7 +2858,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586977007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd6798c8ebabd12418e47b0d4963757f, type: 3}
   m_Name: 
@@ -3621,8 +3625,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 858, y: 501.7638}
-  m_SizeDelta: {x: -1716, y: -1003.5275}
+  m_AnchoredPosition: {x: 183.34302, y: -460}
+  m_SizeDelta: {x: -1330.2966, y: -1003.5275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1926737327
 MonoBehaviour:
@@ -3637,7 +3641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.5773585, g: 0.5087291, b: 0.5087291, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4150,7 +4154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2110303646
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4247,9 +4251,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1586977013}
     m_Modifications:
+    - target: {fileID: 458104782992290455, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2064398448024781425, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
       propertyPath: m_Name
       value: DeviniCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064398448024781425, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358120313119470952, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152170509533403019, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6237603714465404107, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
       propertyPath: m_Pivot.x
