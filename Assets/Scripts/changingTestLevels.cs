@@ -36,15 +36,15 @@ public class changingTestLevels : MonoBehaviour
                     SceneManager.LoadScene("1-3 Cave");
                     break;
                 case "1-3 Cave":
-                    SceneManager.LoadScene("2-1");
+                    SceneManager.LoadScene("2-1 Frozen Lake");
                     break;
-                case "2-1":
-                    SceneManager.LoadScene("2-2");
+                case "2-1 Frozen Lake":
+                    SceneManager.LoadScene("2-2SnowLand");
                     break;
-                case "2-2":
-                    SceneManager.LoadScene("2-3");
+                case "2-2SnowLand":
+                    SceneManager.LoadScene("2-3Tower");
                     break;
-                case "2-3":
+                case "2-3Tower":
                     SceneManager.LoadScene("end");
                     break;
             }
