@@ -29,7 +29,7 @@ public class FireArrows : MonoBehaviour
     public float arrowsCoolDown = 1f;
     public bool canPlayerShoot = true;
     public bool arrowsHitbox = false;
-
+    public Transform firePoint;
     public Image arrowsImage;
     //new
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -86,49 +86,49 @@ public class FireArrows : MonoBehaviour
         {
             StartCoroutine(ArrowsAttack());
 
-            if (Input.GetMouseButtonDown(1) && arrowFire == true)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (!Physics.Raycast(ray, out RaycastHit hit))
+                return;
+
+            Vector3 direction = (hit.point - firePoint.position).normalized;
+
+            Rigidbody arrowToShoot;
+            float speed;
+
+            if (arrowFire)
             {
-                //New
-                //StartCoroutine(ArrowsAttack());
-                //New
                 if (fireCount <= 0)
                 {
-                    //cant fire
-                    Debug.Log("bullets:" + fireCount);
+                    Debug.Log("Out of fire arrows!");
+                    return;
                 }
-                else
-                {
-                    Rigidbody fire = Instantiate(fireArrow, transform.position, transform.rotation);
-                    fire.linearVelocity = transform.forward * fireSpeed;
-                    Destroy(fire.gameObject, 5f);
-                    fireCount -= 1;
-                    Debug.Log("bullets:" + fireCount);
-                }
-            }
-            else if (Input.GetMouseButtonDown(1) && arrowIce == true)
-            {
-                //New
-                //StartCoroutine(ArrowsAttack());
-                //New
 
-                Rigidbody ice = Instantiate(iceArrow, transform.position, transform.rotation);
-                ice.linearVelocity = transform.forward * iceSpeed;
-                Destroy(ice.gameObject, 5f);
+                arrowToShoot = fireArrow;
+                speed = fireSpeed;
+                fireCount--;
             }
-            else if (Input.GetMouseButtonDown(1) && arrowNormal == true)
+            else if (arrowIce)
             {
-                //New
-                //StartCoroutine(ArrowsAttack());
-                //New
-
-                Rigidbody normal = Instantiate(arrow, transform.position, transform.rotation);
-                normal.linearVelocity = transform.forward * normalSpeed;
-                Destroy(normal.gameObject, 5f);
+                arrowToShoot = iceArrow;
+                speed = iceSpeed;
             }
             else
             {
-                //no arrow was fired
+                arrowToShoot = arrow;
+                speed = normalSpeed;
             }
+
+            Rigidbody projectile = Instantiate(
+                arrowToShoot,
+                firePoint.position,
+                Quaternion.LookRotation(direction));
+
+            projectile.linearVelocity = direction * speed;
+
+            Destroy(projectile.gameObject, 5f);
+
+
         }
     }
     private IEnumerator ArrowsAttack()
