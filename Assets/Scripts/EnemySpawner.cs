@@ -52,6 +52,10 @@ public class EnemySpawner : MonoBehaviour
 
 
     }
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
+    }
 
     private void OnDrawGizmos()
     {

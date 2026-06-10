@@ -1,47 +1,90 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class ArcherHealth : MonoBehaviour
 {
-    public Slider ArchhealthBar;
+    [Header("UI")]
+    public Image healthBarFill;
     public TMP_Text playerHealth;
-    private int ArchHealth = 100;
-    public int ArchersmaxHealth = 0;
+
+    [Header("Health")]
+    public int maxHealth = 100;
+    private int currentHealth;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ArchersmaxHealth = ArchHealth;
+        currentHealth = maxHealth;
+        UpdateUI();
     }
+    void UpdateUI()
+    {
+        if (healthBarFill != null)
+            healthBarFill.fillAmount = (float)currentHealth / maxHealth;
+
+        if (playerHealth != null)
+            playerHealth.text = currentHealth + " / " + maxHealth;
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        playerHealth.text = ArchHealth + " / " + ArchersmaxHealth;
-        ArchhealthBar.value = (float)ArchHealth / (float)ArchersmaxHealth;
+        UpdateHealthColor();
+
+
     }
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
         {
-            //you take damage
-            if (ArchHealth >= 0)
-            {
-                Debug.Log("archer took damage");
-                ArchHealth -= 10;
-            }
+            TakeDamage(10);
         }
-        if (other.CompareTag("spider"))
+        else if (other.CompareTag("spider"))
         {
-            if (ArchHealth >= 0)
-            {
-                Debug.Log("archer took damage");
-                ArchHealth -= 15;
-            }
+            TakeDamage(15);
         }
-        if (other.CompareTag("Ice"))
+        else if (other.CompareTag("Ice"))
         {
             Destroy(other.gameObject);
         }
     }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        Debug.Log("Archer took damage");
+
+        UpdateUI();
+
+        if (currentHealth <= 0)
+        {
+            Die();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Archer died");
+        gameObject.SetActive(false);
+    }
+    void UpdateHealthColor()
+    {
+        if (healthBarFill == null) return;
+
+        float percent = (float)currentHealth / maxHealth;
+
+        if (percent > 0.5f)
+            healthBarFill.color = Color.green;
+        else if (percent > 0.25f)
+            healthBarFill.color = Color.yellow;
+        else
+            healthBarFill.color = Color.red;
+    }
+
+
 }
