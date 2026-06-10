@@ -31,6 +31,7 @@ public class Health : MonoBehaviour
     }
     public void TakeDamage(float damage)
     {
+        Debug.Log(gameObject.name + " took damage: " + damage);
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
 
@@ -57,14 +58,22 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        // If this object has a spawner, stop spawning
-        EnemySpawner spawner = GetComponent<EnemySpawner>();
+        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+
         if (spawner != null)
         {
-            spawner.StopSpawning();
+            spawner.currentEnemies--;
         }
 
         Destroy(gameObject);
+    }
+    void Awake()
+    {
+        if (healthBar == null)
+            healthBar = GetComponentInChildren<UnityEngine.UI.Image>();
+
+        if (healthText == null)
+            healthText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }
 
 
