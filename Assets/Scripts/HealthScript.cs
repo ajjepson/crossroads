@@ -2,114 +2,175 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class HealthScript : MonoBehaviour
 {
-    public Slider healthBar;
+    [Header("Health")]
+    public float health = 150f;
+    public float maxHealth = 150f;
+
+    [Header("UI")]
+    public Image healthBarFill; 
     public TMP_Text playerHealth;
-    private int health = 150;
-    public int maxHealth = 0;
-    public bool sheildActive = false;
-    //new
-    //public float sheildStreanth = 2f;
-    public float sheildLength = 3f;
-    public float sheildNotActive = 4f;
-    public bool canPlayerSheild = true;
-    public Image sheildImage;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Shield")]
+    public bool shieldActive = false;
+    public bool canUseShield = true;
+    public float shieldDuration = 3f;
+    public float shieldCooldown = 4f;
+    public Image shieldImage;
+
+    [Header("Invincibility")]
+    public float invulnerabilityDuration = 1f;
+    private bool isInvulnerable = false;
+
     void Start()
     {
-        maxHealth = health;
+        health = maxHealth;
+        UpdateUI();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Debug.Log(sheildActive);
-        playerHealth.text = health + " / " + maxHealth;
-        healthBar.value = (float)health / (float)maxHealth;
-        if (Input.GetKeyDown(KeyCode.Space) && canPlayerSheild == true)
+        if (playerHealth != null)
+            playerHealth.text = Mathf.RoundToInt(health) + " / " + Mathf.RoundToInt(maxHealth);
+
+       
+        if (healthBarFill != null)
+            healthBarFill.fillAmount = health / maxHealth;
+
+        if (Input.GetKeyDown(KeyCode.Space) && canUseShield)
         {
-            Debug.Log("holding sheild");
-            StartCoroutine(SheildBlock());
-            /*
-            if (sheildActive == false)
-            {
-                sheildActive = true;
-                //Invoke("coolDown", 1);
-            }
-            */
+            StartCoroutine(ShieldRoutine());
         }
+
+        UpdateHealthColor();
     }
-    private IEnumerator SheildBlock()
+
+    // DAMAGE 
+    public void TakeDamage(float damage)
     {
-        canPlayerSheild = false;
-        sheildActive = true;
-        //yield return new WaitForSeconds(sheildLength);
+        if (isInvulnerable) return;
+        if (shieldActive) return;
 
-        float countUpTime = 0f;
-        sheildImage.fillAmount = 1f;
+        health -= damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
 
-        while (countUpTime < sheildLength)
-        {
-            countUpTime += Time.deltaTime;
-            sheildImage.fillAmount = 1f - (countUpTime / sheildLength);
-            yield return null;
-        }
-        sheildActive = false;
-        //flip this to fill back up (replace countUpTime with countDownTime and sheildLength with sheildNotActive)
-        float countDownTime = 0f;
-        sheildImage.fillAmount = 0f;
-        while (countDownTime < sheildNotActive)
-        {
-            countDownTime += Time.deltaTime;
-            sheildImage.fillAmount = (countDownTime / sheildNotActive);
-            yield return null;
-        }
-        sheildImage.fillAmount = 1f;
-        canPlayerSheild = true;
+        UpdateUI();
+
+        if (health <= 0)
+            Die();
+
+        StartCoroutine(InvincibilityFrames());
     }
-    public void OnTriggerEnter(Collider other)
+
+    //  HEAL 
+    public void Heal(float amount)
+    {
+        health += amount;
+        health = Mathf.Clamp(health, 0, maxHealth);
+        UpdateUI();
+    }
+
+    // SHIELD
+    IEnumerator ShieldRoutine()
+    {
+        canUseShield = false;
+        shieldActive = true;
+
+        float t = 0f;
+
+        if (shieldImage != null)
+            shieldImage.fillAmount = 1f;
+
+        while (t < shieldDuration)
+        {
+            t += Time.deltaTime;
+
+            if (shieldImage != null)
+                shieldImage.fillAmount = 1f - (t / shieldDuration);
+
+            yield return null;
+        }
+
+        shieldActive = false;
+
+        float cd = 0f;
+        while (cd < shieldCooldown)
+        {
+            cd += Time.deltaTime;
+
+            if (shieldImage != null)
+                shieldImage.fillAmount = cd / shieldCooldown;
+
+            yield return null;
+        }
+
+        if (shieldImage != null)
+            shieldImage.fillAmount = 1f;
+
+        canUseShield = true;
+    }
+
+    //  INVINCIBILITY 
+    IEnumerator InvincibilityFrames()
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerabilityDuration);
+        isInvulnerable = false;
+    }
+
+    //  COLLISIONS
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
         {
-            if (sheildActive)
-            {
-                //take no damage
-                return;
-            }
-            //you take damage
-            if (health > 0)
-            {
-                Debug.Log("you took damage");
-                health -= 10;
-            }
+            TakeDamage(10f);
         }
+
         if (other.CompareTag("spider"))
         {
-            if (sheildActive)
-            {
-                //take no damage
-                return;
-            }
-            //you take damage
-            if (health > 0)
-            {
-                Debug.Log("you took damage");
-                health -= 15;
-            }
+            TakeDamage(15f);
         }
 
         if (other.CompareTag("Heal"))
         {
-            //you heal damage
-            if (health > 0 && health < 90)
-            {
-                Debug.Log("you Healed");
-                health += 10;
-                Destroy(GameObject.FindWithTag("Heal"));
-            }
+            Heal(10f);
+            Destroy(other.gameObject);
         }
+    }
 
+    // DEATH 
+    void Die()
+    {
+        Debug.Log("Player died");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    //  UI 
+    void UpdateUI()
+    {
+        if (healthBarFill != null)
+            healthBarFill.fillAmount = health / maxHealth;
+
+        if (playerHealth != null)
+            playerHealth.text = Mathf.RoundToInt(health) + " / " + Mathf.RoundToInt(maxHealth);
+    }
+
+   
+    void UpdateHealthColor()
+    {
+        if (healthBarFill == null) return;
+
+        float percent = health / maxHealth;
+
+        if (percent > 0.5f)
+            healthBarFill.color = Color.green;
+        else if (percent > 0.25f)
+            healthBarFill.color = Color.yellow;
+        else
+            healthBarFill.color = Color.red;
     }
 }
