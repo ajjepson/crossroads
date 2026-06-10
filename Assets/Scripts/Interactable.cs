@@ -10,7 +10,9 @@ public class Interactable : MonoBehaviour
     public string interactionText = "Press E to interact";
     private bool isPlayerInRange;
     public TMP_Text popupText;
-    
+    public float spinSpeed = 100f;
+    public float healAmount = 25f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +22,7 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
@@ -56,6 +59,19 @@ public class Interactable : MonoBehaviour
         if (popupText != null)
         {
             popupText.text = interactionText;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            HealthScript HealthScript = player.GetComponent<HealthScript>();
+            if (HealthScript != null)
+            {
+                HealthScript.Heal(10f);
+            }
+
+
         }
         Debug.Log("Item picked up!");
         Destroy(gameObject);
