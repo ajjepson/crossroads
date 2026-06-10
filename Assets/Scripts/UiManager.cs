@@ -27,6 +27,10 @@ public class UiManager : MonoBehaviour
     {
         SceneManager.LoadScene("MenuScreen");
     }
+    public void CreditsButton()
+    {
+        SceneManager.LoadScene("Credits");
+    }
     public void QuitButton()
     {
         Application.Quit();
