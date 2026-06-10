@@ -1560,6 +1560,10 @@ PrefabInstance:
       propertyPath: swordImage
       value: 
       objectReference: {fileID: 370161152}
+    - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: swordPivot
+      value: 
+      objectReference: {fileID: 320364520}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: health
       value: 100

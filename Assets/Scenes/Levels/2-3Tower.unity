@@ -767,6 +767,10 @@ PrefabInstance:
       propertyPath: swordImage
       value: 
       objectReference: {fileID: 370161152}
+    - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: swordPivot
+      value: 
+      objectReference: {fileID: 1085187518}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: healthBar
       value: 
@@ -2400,9 +2404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98728c4971ba5e9488dd06f2e357a4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherHealth
-  ArchhealthBar: {fileID: 825264626}
+  healthBarFill: {fileID: 0}
   playerHealth: {fileID: 686150757}
-  ArchersmaxHealth: 0
+  maxHealth: 100
 --- !u!114 &720627967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2431,6 +2435,7 @@ MonoBehaviour:
   arrowsCoolDown: 1
   canPlayerShoot: 1
   arrowsHitbox: 0
+  firePoint: {fileID: 0}
   arrowsImage: {fileID: 1832351132}
 --- !u!114 &720627968
 MonoBehaviour:
@@ -2463,17 +2468,6 @@ MonoBehaviour:
   canPlayerSprint: 1
   sprintImage: {fileID: 1238907796}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
---- !u!114 &825264626 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 53380789672976354, guid: 468d3ab76585eb64493a8a0e6b63ac6b, type: 3}
-  m_PrefabInstance: {fileID: 4243289856644466515}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &836206623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,6 +2812,11 @@ MonoBehaviour:
   mouseSensitivity: 200
   minY: -30
   maxY: 60
+--- !u!4 &1085187518 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7534058356891900711, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+  m_PrefabInstance: {fileID: 190145191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088230362
 GameObject:
   m_ObjectHideFlags: 0
