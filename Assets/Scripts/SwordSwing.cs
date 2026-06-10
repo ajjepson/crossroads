@@ -18,6 +18,7 @@ public class SwordSwing : MonoBehaviour
 
     public FinalBoss FinalBoss;
     public SpiderBoss SpiderBoss;
+    public Transform swordPivot;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,14 +32,30 @@ public class SwordSwing : MonoBehaviour
     {
         //Debug.Log(attacking);
         //left click
-        if (Input.GetMouseButtonDown(0) && canPlayerSwing == true)
+        AimAtMouse();
+
+        if (Input.GetMouseButtonDown(0) && canPlayerSwing)
         {
-            //New got rid 0f animator.SetBool("SwingSword", true);
-            //New got rid 0f attacking = true;
-            //New got rid 0f hasHitEnemyThisSwing = false;
-            //New got rid of Invoke("SwingDelay", 2);
-            //new
             StartCoroutine(SwordAttack());
+        }
+
+        //New got rid 0f animator.SetBool("SwingSword", true);
+        //New got rid 0f attacking = true;
+        //New got rid 0f hasHitEnemyThisSwing = false;
+        //New got rid of Invoke("SwingDelay", 2);
+        //new
+
+    }
+    void AimAtMouse()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 target = hit.point;
+            target.y = swordPivot.position.y;
+
+            swordPivot.LookAt(target);
         }
     }
     void SwingDelay()
