@@ -2435,7 +2435,7 @@ MonoBehaviour:
   arrowsCoolDown: 1
   canPlayerShoot: 1
   arrowsHitbox: 0
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 720627964}
   arrowsImage: {fileID: 1832351132}
 --- !u!114 &720627968
 MonoBehaviour:

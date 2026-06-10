@@ -59753,6 +59753,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1228739471}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: shieldImage
+      value: 
+      objectReference: {fileID: 1228739471}
+    - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 2044440301}
