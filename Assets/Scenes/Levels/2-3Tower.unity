@@ -2536,13 +2536,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98728c4971ba5e9488dd06f2e357a4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherHealth
-<<<<<<< Updated upstream
   healthBarFill: {fileID: 0}
   playerHealth: {fileID: 686150757}
-=======
+
   healthBarFill: {fileID: 2068455207}
   playerHealth: {fileID: 2068455206}
->>>>>>> Stashed changes
+
   maxHealth: 100
 --- !u!114 &720627967
 MonoBehaviour:
@@ -2572,11 +2571,11 @@ MonoBehaviour:
   arrowsCoolDown: 1
   canPlayerShoot: 1
   arrowsHitbox: 0
-<<<<<<< Updated upstream
+
   firePoint: {fileID: 720627964}
-=======
+
   firePoint: {fileID: 0}
->>>>>>> Stashed changes
+
   arrowsImage: {fileID: 1832351132}
 --- !u!114 &720627968
 MonoBehaviour:

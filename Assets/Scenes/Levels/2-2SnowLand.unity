@@ -4531,13 +4531,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98728c4971ba5e9488dd06f2e357a4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherHealth
-<<<<<<< Updated upstream
+
   healthBarFill: {fileID: 0}
   playerHealth: {fileID: 686150757}
-=======
+
   healthBarFill: {fileID: 580933666}
   playerHealth: {fileID: 580933665}
->>>>>>> Stashed changes
+
   maxHealth: 100
 --- !u!114 &720627967
 MonoBehaviour:
