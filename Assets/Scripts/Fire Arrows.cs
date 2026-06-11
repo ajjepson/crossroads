@@ -118,14 +118,13 @@ public class FireArrows : MonoBehaviour
                 arrowToShoot = arrow;
                 speed = normalSpeed;
             }
-
             Rigidbody projectile = Instantiate(
-                arrowToShoot,
-                firePoint.position,
-                Quaternion.LookRotation(direction));
-
+               arrowToShoot,
+               firePoint.position,
+               Quaternion.identity
+           );
+            projectile.transform.forward = direction;
             projectile.linearVelocity = direction * speed;
-
             Destroy(projectile.gameObject, 5f);
 
 
