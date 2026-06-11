@@ -42976,7 +42976,7 @@ PrefabInstance:
     - target: {fileID: 3337322351398694510, guid: 9d2d782642a17ce47be259355da9c48e, type: 3}
       propertyPath: pausedMenu
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1069790517}
     - target: {fileID: 8870259796634522454, guid: 9d2d782642a17ce47be259355da9c48e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 704.6827
@@ -58307,7 +58307,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 425009393}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: ContiuneButton
+        m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
