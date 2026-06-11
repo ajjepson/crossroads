@@ -16,7 +16,7 @@ public class UiManager : MonoBehaviour
     }
     public void PlayButton()
     {
-        SceneManager.LoadScene("DeviniTest");
+        SceneManager.LoadScene("1-1 Village");
     }
     public void HelpButton()
     {

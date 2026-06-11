@@ -12,7 +12,7 @@ public class SkeletonController : MonoBehaviour
     private Vector3 patrolTarget;
     [SerializeField] private Transform player;
     [SerializeField] private FloatingHealthBar healthBar;
-   
+
     [Header("Stats")]
     [SerializeField] private float speed = 2f;
     [SerializeField] private float sightRange = 10f;
@@ -23,51 +23,62 @@ public class SkeletonController : MonoBehaviour
 
     int health;
     float lastAttackTime;
-    Transform targetPoint;
+    HealthScript playerHealth;
 
     void Start()
     {
         health = maxHealth;
+        patrolCenter = transform.position;
         healthBar?.UpdateBar(health, maxHealth);
+
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null)
+            {
                 player = p.transform;
+                playerHealth = p.GetComponent<HealthScript>();
+            }
         }
-        
+        else
+        {
+            playerHealth = player.GetComponent<HealthScript>();
+        }
+
+        if (playerHealth == null)
+            Debug.LogError("No HealthScript");
 
         SetNewPatrolPoint();
     }
 
     void Update()
     {
-        patrolCenter = transform.position;
+        if (player == null) return;
+
         float dist = Vector3.Distance(transform.position, player.position);
 
         if (dist <= attackRange) currentState = EnemyState.Attack;
         else if (dist <= sightRange) currentState = EnemyState.Chase;
         else currentState = EnemyState.Patrol;
 
-        if (currentState == EnemyState.Patrol) Patrol();
-        if (currentState == EnemyState.Chase) Chase();
-        if (currentState == EnemyState.Attack) Attack();
-
+        switch (currentState)
+        {
+            case EnemyState.Patrol: Patrol(); break;
+            case EnemyState.Chase: Chase(); break;
+            case EnemyState.Attack: Attack(); break;
+        }
     }
 
     void Patrol()
     {
         Move(patrolTarget);
         if (Vector3.Distance(transform.position, patrolTarget) < 0.5f)
-        {
             SetNewPatrolPoint();
-        }
-       
     }
+
     void SetNewPatrolPoint()
     {
         Vector2 random = Random.insideUnitCircle.normalized * Random.Range(1f, patrolRadius);
-
         patrolTarget = new Vector3(
             patrolCenter.x + random.x,
             transform.position.y,
@@ -81,12 +92,16 @@ public class SkeletonController : MonoBehaviour
 
     void Attack()
     {
-        Move(transform.position);
+        float dist = Vector3.Distance(transform.position, player.position);
+        if (dist > attackRange * 0.8f)
+            Move(player.position);
 
         if (Time.time > lastAttackTime + attackCooldown)
         {
-            Health p = player.GetComponent<Health>();
-            if (p != null) p.TakeDamage(damage);
+            if (playerHealth != null)
+                playerHealth.TakeDamage((float)damage);
+            else
+                Debug.LogWarning("playerHealth is null, can't deal damage!");
 
             lastAttackTime = Time.time;
         }
@@ -105,9 +120,9 @@ public class SkeletonController : MonoBehaviour
     {
         health -= amount;
         healthBar?.UpdateBar(health, maxHealth);
-
         if (health <= 0) Destroy(gameObject);
     }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -118,15 +133,13 @@ public class SkeletonController : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
-
     }
-    public void SetPatrolArea(Vector3 center, float radius)
 
+    public void SetPatrolArea(Vector3 center, float radius)
     {
         patrolCenter = center;
         patrolRadius = radius;
         SetNewPatrolPoint();
-
     }
 
 
