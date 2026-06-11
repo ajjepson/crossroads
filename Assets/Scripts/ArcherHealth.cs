@@ -46,6 +46,10 @@ public class ArcherHealth : MonoBehaviour
         {
             TakeDamage(15);
         }
+        else if (other.CompareTag("Boss"))
+        {
+            TakeDamage(20);
+        }
         else if (other.CompareTag("Ice"))
         {
             Destroy(other.gameObject);
