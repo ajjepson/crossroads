@@ -106,7 +106,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("archer"))
         {
             playerInRange = true;
 
@@ -117,7 +117,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("archer"))
         {
             playerInRange = false;
 

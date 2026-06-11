@@ -10,8 +10,10 @@ public class SkeletonController : MonoBehaviour
     private Vector3 patrolCenter;
     public float patrolRadius = 2f;
     private Vector3 patrolTarget;
-    [SerializeField] private Transform player;
     [SerializeField] private FloatingHealthBar healthBar;
+
+    [Header("Target Tags")]
+    [SerializeField] private string[] targetTags = { "Player", "archer" };
 
     [Header("Stats")]
     [SerializeField] private float speed = 2f;
@@ -23,39 +25,31 @@ public class SkeletonController : MonoBehaviour
 
     int health;
     float lastAttackTime;
-    HealthScript playerHealth;
+
+    // Nearest target this frame
+    Transform currentTarget;
+    HealthScript currentTargetHealth;
 
     void Start()
     {
         health = maxHealth;
         patrolCenter = transform.position;
         healthBar?.UpdateBar(health, maxHealth);
-
-        if (player == null)
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null)
-            {
-                player = p.transform;
-                playerHealth = p.GetComponent<HealthScript>();
-            }
-        }
-        else
-        {
-            playerHealth = player.GetComponent<HealthScript>();
-        }
-
-        if (playerHealth == null)
-            Debug.LogError("No HealthScript");
-
         SetNewPatrolPoint();
     }
 
     void Update()
     {
-        if (player == null) return;
+        FindNearestTarget();
 
-        float dist = Vector3.Distance(transform.position, player.position);
+        if (currentTarget == null)
+        {
+            currentState = EnemyState.Patrol;
+            Patrol();
+            return;
+        }
+
+        float dist = Vector3.Distance(transform.position, currentTarget.position);
 
         if (dist <= attackRange) currentState = EnemyState.Attack;
         else if (dist <= sightRange) currentState = EnemyState.Chase;
@@ -67,6 +61,32 @@ public class SkeletonController : MonoBehaviour
             case EnemyState.Chase: Chase(); break;
             case EnemyState.Attack: Attack(); break;
         }
+    }
+
+    // Scans all tagged targets and locks onto the closest one
+    void FindNearestTarget()
+    {
+        float nearestDist = Mathf.Infinity;
+        Transform nearest = null;
+        HealthScript nearestHealth = null;
+
+        foreach (string tag in targetTags)
+        {
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject t in targets)
+            {
+                float dist = Vector3.Distance(transform.position, t.transform.position);
+                if (dist < nearestDist)
+                {
+                    nearestDist = dist;
+                    nearest = t.transform;
+                    nearestHealth = t.GetComponent<HealthScript>();
+                }
+            }
+        }
+
+        currentTarget = nearest;
+        currentTargetHealth = nearestHealth;
     }
 
     void Patrol()
@@ -87,21 +107,21 @@ public class SkeletonController : MonoBehaviour
 
     void Chase()
     {
-        Move(player.position);
+        Move(currentTarget.position);
     }
 
     void Attack()
     {
-        float dist = Vector3.Distance(transform.position, player.position);
+        float dist = Vector3.Distance(transform.position, currentTarget.position);
         if (dist > attackRange * 0.8f)
-            Move(player.position);
+            Move(currentTarget.position);
 
         if (Time.time > lastAttackTime + attackCooldown)
         {
-            if (playerHealth != null)
-                playerHealth.TakeDamage((float)damage);
+            if (currentTargetHealth != null)
+                currentTargetHealth.TakeDamage((float)damage);
             else
-                Debug.LogWarning("playerHealth is null, can't deal damage!");
+                Debug.LogWarning("Target has no HealthScript!");
 
             lastAttackTime = Time.time;
         }
