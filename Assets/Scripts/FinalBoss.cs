@@ -59,7 +59,7 @@ public class FinalBoss : MonoBehaviour
 
         if (finalHealth <= 0)
         {
-            //SceneManager.LoadScene("end");
+            SceneManager.LoadScene("Credits");
         }
     }
     //new
