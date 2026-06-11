@@ -7,98 +7,78 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    public float health = 100f;
+    public float health;
     public float maxHealth = 100f;
 
     public Image healthBar;
     public TextMeshProUGUI healthText;
-    public float invulnerabilityDuration = 1f;
-    private bool isInvulnerable = false;
-    
+   
 
 
     void Start()
     {
         health = maxHealth;
-        UpdateHealthBarUI();
+        UpdateUI();
+
+
     }
 
     void Update()
     {
-        if (healthBar != null)
-        {
-            healthBar.fillAmount = Mathf.Clamp01(health / maxHealth);
-        }
-
-        if (healthText != null)
-        {
-            healthText.text = $"{gameObject.name} HP: {Mathf.RoundToInt(health)}";
-        }
+        
+      
 
     }
     public void TakeDamage(float damage)
     {
-        if (isInvulnerable) return;
-
+        Debug.Log(gameObject.name + " took damage: " + damage);
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
 
-        UpdateHealthBarUI();
+        UpdateUI();
 
         if (health <= 0)
         {
             Die();
         }
 
-        StartCoroutine(InvincibilityFrames());
     }
-
-    void Die()
-    {
-        Debug.Log("Player died");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-    }
-    void UpdateHealthBarUI()
+ 
+    void UpdateUI()
     {
         float percent = health / maxHealth;
-
 
         if (healthBar != null)
             healthBar.fillAmount = percent;
 
-
         if (healthText != null)
             healthText.text = $"{gameObject.name} HP: {Mathf.RoundToInt(health)}";
-
-        // Color change 
-        if (healthBar != null)
-        {
-            if (percent > 0.5f)
-                healthBar.color = Color.green;
-            else if (percent > 0.25f)
-                healthBar.color = Color.yellow;
-            else
-                healthBar.color = Color.red;
-        }
     }
-    private void OnTriggerEnter(Collider other)
+
+
+    void Die()
     {
-        if (other.CompareTag("enemy"))
+        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+
+        if (spawner != null)
         {
-            Debug.Log("Hit by enemy!");
-            TakeDamage(10f); // Damage amount
+            spawner.currentEnemies--;
         }
+
+        Destroy(gameObject);
     }
-    private IEnumerator InvincibilityFrames()
+    void Awake()
     {
-        isInvulnerable = true;
+        if (healthBar == null)
+            healthBar = GetComponentInChildren<UnityEngine.UI.Image>();
 
-        yield return new WaitForSeconds(invulnerabilityDuration);
-
-        isInvulnerable = false;
+        if (healthText == null)
+            healthText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }
-   
-    
+
+
+
+
+
 
 }
