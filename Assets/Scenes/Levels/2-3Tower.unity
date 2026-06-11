@@ -2537,11 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherHealth
   healthBarFill: {fileID: 0}
-  playerHealth: {fileID: 686150757}
-
-  healthBarFill: {fileID: 2068455207}
-  playerHealth: {fileID: 2068455206}
-
+  playerHealth: {fileID: 0}
   maxHealth: 100
 --- !u!114 &720627967
 MonoBehaviour:
@@ -2571,11 +2567,7 @@ MonoBehaviour:
   arrowsCoolDown: 1
   canPlayerShoot: 1
   arrowsHitbox: 0
-
   firePoint: {fileID: 720627964}
-
-  firePoint: {fileID: 0}
-
   arrowsImage: {fileID: 1832351132}
 --- !u!114 &720627968
 MonoBehaviour:
@@ -2665,7 +2657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spider Health
+  m_text: Boss Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14696,28 +14688,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
---- !u!114 &2068455206 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 699736800224633121, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
-  m_PrefabInstance: {fileID: 2068455205}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &2068455207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1998461918184117710, guid: 8830adaab98fb5247aad652cb8b636c5, type: 3}
-  m_PrefabInstance: {fileID: 2068455205}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &2074779586
 GameObject:
   m_ObjectHideFlags: 0
