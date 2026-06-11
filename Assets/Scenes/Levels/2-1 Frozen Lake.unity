@@ -15431,6 +15431,7 @@ GameObject:
   - component: {fileID: 830729085}
   - component: {fileID: 830729084}
   - component: {fileID: 830729083}
+  - component: {fileID: 830729087}
   m_Layer: 0
   m_Name: water
   m_TagString: Untagged
@@ -15531,6 +15532,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830729087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830729082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d425c0b9354fb3f418a060db0a594099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathZone
 --- !u!1 &839001852
 GameObject:
   m_ObjectHideFlags: 0
