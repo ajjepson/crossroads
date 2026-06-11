@@ -115,11 +115,10 @@ GameObject:
   - component: {fileID: 5025378164977411601}
   - component: {fileID: 5477199763024923331}
   - component: {fileID: 1636808836937448222}
-  - component: {fileID: 5897646045447741310}
   - component: {fileID: 7140653546816998759}
   m_Layer: 0
   m_Name: EnemySpawner
-  m_TagString: enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,31 +231,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   interactText: {fileID: 5398633189256688422}
-  enemyPrefab: {fileID: 906779528866257929, guid: 4e53b4096b0e09442b04a0ceba501e8e, type: 3}
+  enemyPrefab: {fileID: 1330263778282843775, guid: 4e53b4096b0e09442b04a0ceba501e8e, type: 3}
   maxEnemies: 2
   spawnInterval: 30
   areaSize: {x: 10, y: 1, z: 10}
   currentEnemies: 0
-  spawnerHP: 2
-  maxSpawnerHP: 2
+  spawnerHP: 1
+  maxSpawnerHP: 1
   pressCooldown: 10
   healthBar: {fileID: 2851297671370631281}
---- !u!114 &5897646045447741310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158923977363811709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6798c8ebabd12418e47b0d4963757f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  health: 100
-  maxHealth: 100
-  healthBar: {fileID: 0}
-  healthText: {fileID: 0}
 --- !u!54 &7140653546816998759
 Rigidbody:
   m_ObjectHideFlags: 0
