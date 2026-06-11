@@ -257,10 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98728c4971ba5e9488dd06f2e357a4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArcherHealth
-  ArchhealthBar: {fileID: 0}
+  healthBarFill: {fileID: 0}
   playerHealth: {fileID: 0}
-  ArchHealth: 100
-  ArchersmaxHealth: 0
+  maxHealth: 100
 --- !u!114 &140758595264783707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +288,7 @@ MonoBehaviour:
   arrowsCoolDown: 2
   canPlayerShoot: 1
   arrowsHitbox: 0
+  firePoint: {fileID: 0}
   arrowsImage: {fileID: 0}
 --- !u!114 &7673430467121262559
 MonoBehaviour:
