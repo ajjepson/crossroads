@@ -134,6 +134,10 @@ public class HealthScript : MonoBehaviour
         {
             TakeDamage(15f);
         }
+        if (other.CompareTag("Boss"))
+        {
+            TakeDamage(20);
+        }
 
         if (other.CompareTag("Heal"))
         {

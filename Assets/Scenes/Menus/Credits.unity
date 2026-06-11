@@ -1018,9 +1018,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Crossroad\n\nMade by......\n\nAndrew Jepson: arts\n\nBrian Scott : arts\n\n\u2060\u2060EthanCil-Alford
-    : arts\n\n\u2060James Ross : arts\n\n\u2060Devin Jones : Programer\n\nIsaiah
-    Ragland : Programer\n\nThank You For Playing our Game"
+  m_text: "Crossroad\n\nMade by......\n\nAndrew Jepson: artist \n\nBrian Scott :
+    artist \n\n\u2060\u2060EthanCil-Alford : artist \n\n\u2060James Ross : artist
+    \n\n\u2060Devin Jones : Programer\n\nIsaiah Ragland : Programer\n\nThank You
+    For Playing our Game"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
