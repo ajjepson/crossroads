@@ -30,6 +30,11 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("MenuScreen");
         Time.timeScale = 1.0f;
     }
+    public void Reset()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
+    }
     public void QuitButton()
     {
         Application.Quit();
