@@ -902,6 +902,10 @@ PrefabInstance:
       propertyPath: swordPivot
       value: 
       objectReference: {fileID: 1085187518}
+    - target: {fileID: 4463962571898655961, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: swingCoolDown
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: health
       value: 100
@@ -916,6 +920,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
       propertyPath: sheildImage
+      value: 
+      objectReference: {fileID: 261432014}
+    - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
+      propertyPath: shieldImage
       value: 
       objectReference: {fileID: 261432014}
     - target: {fileID: 6275987614710275800, guid: 1e5b2ff3b223c084cbb89304e9a9e5ed, type: 3}
