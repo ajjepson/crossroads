@@ -10,7 +10,7 @@ public class SwordSwing : MonoBehaviour
     public int damage = 10;
     private bool hasHitEnemyThisSwing;
     //new
-    public float swingCoolDown = 3f;
+    public float swingCoolDown = 0.5f;
     public bool canPlayerSwing = true;
     public bool swingHitbox = false;
 
