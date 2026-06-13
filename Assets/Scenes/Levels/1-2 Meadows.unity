@@ -13130,8 +13130,8 @@ MonoBehaviour:
   dashLength: 3
   coolDownNumber: 4
   canPlayerDash: 1
-  dashDistance: 2.5
-  dashSpeed: 10
+  dashDistance: 5
+  dashSpeed: 20
   cameraTransform: {fileID: 961739753}
   archerWalkingAudio: {fileID: 8300000, guid: b80c73f91b793e54e8b6e9b87d6ac179, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}

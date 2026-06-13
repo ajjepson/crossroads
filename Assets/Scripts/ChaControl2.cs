@@ -20,8 +20,8 @@ public class ChaControl2 : MonoBehaviour
     public float coolDownNumber = 4f;
     public bool canPlayerDash = true;
     //dash effects
-    public float dashDistance = 4f;
-    public float dashSpeed = 20f;
+    public float dashDistance = 16f;
+    public float dashSpeed = 40f;
     private bool amIDashing = false;
     private Vector3 dashLoction;
 
@@ -98,8 +98,14 @@ public class ChaControl2 : MonoBehaviour
         // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
 
+        if (controller.isGrounded && playerVelocity.y < 0 )
+        {
+            playerVelocity.y = -2f;
+        }
+
         // Combine horizontal and vertical movement
-        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+        Vector3 finalMove = (move * playerSpeed);
+        finalMove.y = playerVelocity.y;
         controller.Move(finalMove * Time.deltaTime);
 
         //testing Dash
@@ -113,7 +119,12 @@ public class ChaControl2 : MonoBehaviour
         }
         if (amIDashing)
         {
-            controller.Move((dashLoction - transform.position).normalized * dashDistance * Time.deltaTime);
+            Vector3 dashDir = (dashLoction - transform.position).normalized;
+            CollisionFlags flags = controller.Move(dashDir * dashSpeed * Time.deltaTime);
+            if ((flags & CollisionFlags.CollidedSides) != 0)
+            {
+                amIDashing = false;
+            }
             if (Vector3.Distance(transform.position, dashLoction) < 0.2f)
             {
                 amIDashing = false;
