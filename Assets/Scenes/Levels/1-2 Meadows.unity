@@ -13015,7 +13015,7 @@ MonoBehaviour:
   canUseShield: 1
   shieldDuration: 3
   shieldCooldown: 4
-  shieldImage: {fileID: 0}
+  shieldImage: {fileID: 1259392168}
   invulnerabilityDuration: 1
 --- !u!82 &720627972
 AudioSource:
@@ -13126,6 +13126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892798da8da8d9641bc80c98eabea34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChaControl2
+  dashImage: {fileID: 1928656530}
+  dashLength: 3
+  coolDownNumber: 4
+  canPlayerDash: 1
+  dashDistance: 2.5
+  dashSpeed: 10
   cameraTransform: {fileID: 961739753}
   archerWalkingAudio: {fileID: 8300000, guid: b80c73f91b793e54e8b6e9b87d6ac179, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -26863,6 +26869,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 35b03f2c1b6348a4d9cc0cbf6bc9c602, type: 3}
   m_PrefabInstance: {fileID: 1256919760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1259392168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 212590513241140520, guid: 80127dc7f7ad2f6418e07e85ad51d947, type: 3}
+  m_PrefabInstance: {fileID: 1372934399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1264426270
 GameObject:
   m_ObjectHideFlags: 0
