@@ -24,6 +24,10 @@ public class charcontrol : MonoBehaviour
     private bool canSprint = false;
     public Image sprintImage;
     //new
+    //audio
+    [SerializeField] private AudioClip walkingAudio;
+    private AudioSource audioWalkingSource;
+
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
 
@@ -36,6 +40,8 @@ public class charcontrol : MonoBehaviour
         //camera
         */
         controller = gameObject.AddComponent<CharacterController>();
+
+        audioWalkingSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -75,6 +81,15 @@ public class charcontrol : MonoBehaviour
             //transform.forward = move;
             Quaternion targetRotation = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+            if(!audioWalkingSource.isPlaying)
+            {
+                audioWalkingSource.clip = walkingAudio;
+                audioWalkingSource.Play();
+            }
+        }
+        else
+        {
+            audioWalkingSource.Stop();
         }
 
         // Apply gravity
