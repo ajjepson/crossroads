@@ -14,6 +14,9 @@ public class ChaControl2 : MonoBehaviour
     public Transform cameraTransform;
     ThridPersonCamera cam;
     //camera
+    //audio
+    [SerializeField] private AudioClip archerWalkingAudio;
+    private AudioSource audioArcherSource;
 
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
@@ -26,6 +29,7 @@ public class ChaControl2 : MonoBehaviour
         //camera
         */
         controller = gameObject.AddComponent<CharacterController>();
+        audioArcherSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -62,7 +66,18 @@ public class ChaControl2 : MonoBehaviour
 
         if (move != Vector3.zero)
         {
-            transform.forward = move;
+            Quaternion targetRotation = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
+
+            if (!audioArcherSource.isPlaying)
+            {
+                audioArcherSource.clip = archerWalkingAudio;
+                audioArcherSource.Play();
+            }
+        }
+        else
+        {
+            audioArcherSource.Stop();
         }
 
         // Apply gravity
