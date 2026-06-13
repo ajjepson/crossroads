@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class ChaControl2 : MonoBehaviour
 {
@@ -9,6 +12,18 @@ public class ChaControl2 : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 playerVelocity;
+
+    //testing dash
+    private bool canDash = false;
+    public Image dashImage;
+    public float dashLength = 3f;
+    public float coolDownNumber = 4f;
+    public bool canPlayerDash = true;
+    //dash effects
+    public float dashDistance = 4f;
+    public float dashSpeed = 20f;
+    private bool amIDashing = false;
+    private Vector3 dashLoction;
 
     //camera
     public Transform cameraTransform;
@@ -86,5 +101,56 @@ public class ChaControl2 : MonoBehaviour
         // Combine horizontal and vertical movement
         Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
         controller.Move(finalMove * Time.deltaTime);
+
+        //testing Dash
+        if (Input.GetKey(KeyCode.LeftShift) && canPlayerDash && !amIDashing)
+        {
+            if (!canDash)
+            {
+                StartCoroutine(Dashing());
+                StartDashing();
+            }
+        }
+        if (amIDashing)
+        {
+            controller.Move((dashLoction - transform.position).normalized * dashDistance * Time.deltaTime);
+            if (Vector3.Distance(transform.position, dashLoction) < 0.2f)
+            {
+                amIDashing = false;
+            }
+        }
+    }
+    private void StartDashing()
+    {
+        amIDashing = true;
+        dashLoction = transform.position + transform.forward * dashDistance;
+    }
+    private IEnumerator Dashing()
+    {
+        canDash = true;
+        canPlayerDash = false;
+        //yield return new WaitForSeconds(sheildLength);
+
+        float countUpTime = 0f;
+        dashImage.fillAmount = 1f;
+
+        while (countUpTime < dashLength)
+        {
+            countUpTime += Time.deltaTime;
+            dashImage.fillAmount = 1f - (countUpTime / dashLength);
+            yield return null;
+        }
+        //flip this to fill back up (replace countUpTime with countDownTime and dashLength with coolDownNumber)
+        float countDownTime = 0f;
+        dashImage.fillAmount = 0f;
+        while (countDownTime < coolDownNumber)
+        {
+            countDownTime += Time.deltaTime;
+            dashImage.fillAmount = (countDownTime / coolDownNumber);
+            yield return null;
+        }
+        dashImage.fillAmount = 1f;
+        canPlayerDash = true;
+        canDash = false;
     }
 }
