@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class SwordSwing : MonoBehaviour
 {
@@ -19,12 +20,16 @@ public class SwordSwing : MonoBehaviour
     public FinalBoss FinalBoss;
     public SpiderBoss SpiderBoss;
     public Transform swordPivot;
+    //audio
+    [SerializeField] private AudioClip swordAtackAudio;
+    private AudioSource audioSource;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //attacking = false;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -68,6 +73,9 @@ public class SwordSwing : MonoBehaviour
         canPlayerSwing = false;
         swingHitbox = true;
         animator.SetTrigger("SwordTrigger");
+        //play audio
+        audioSource.clip = swordAtackAudio;
+        audioSource.Play();
         //animator.SetBool("SwingSword", true);
         swordImage.fillAmount = 0f;
         float countdown = 0f;
