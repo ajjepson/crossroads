@@ -32,6 +32,11 @@ public class FireArrows : MonoBehaviour
     public Transform firePoint;
     public Image arrowsImage;
     //new
+
+    //audio
+    [SerializeField] private AudioClip bowShotAudio;
+    private AudioSource audioBowSource;
+    //
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,6 +48,8 @@ public class FireArrows : MonoBehaviour
         arrowNormal = true;
         //arrowImage = GetComponent<Image>();
         arrowImage.sprite = normalSprite;
+
+        audioBowSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -84,8 +91,11 @@ public class FireArrows : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1) && canPlayerShoot == true)
         {
-            StartCoroutine(ArrowsAttack());
+            //arrows audio
 
+            audioBowSource.clip = bowShotAudio;
+            audioBowSource.Play();
+            StartCoroutine(ArrowsAttack());
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(ray, out RaycastHit hit))
@@ -103,7 +113,6 @@ public class FireArrows : MonoBehaviour
                     Debug.Log("Out of fire arrows!");
                     return;
                 }
-
                 arrowToShoot = fireArrow;
                 speed = fireSpeed;
                 fireCount--;
