@@ -21,6 +21,7 @@ public class PauseMenu : MonoBehaviour
         pausedMenu.SetActive(false);
         volumeSlider.SetActive(false);
         volumeText.SetActive(false);
+        backButton.SetActive(false);
     }
 
     // Update is called once per frame
