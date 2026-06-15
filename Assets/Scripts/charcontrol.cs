@@ -18,11 +18,14 @@ public class charcontrol : MonoBehaviour
     ThridPersonCamera cam;
     //camera
     //new
-    public float sprintLength = 3f;
-    public float playertiredness = 4f;
-    public bool canPlayerSprint = true;
-    private bool canSprint = false;
+    //remove sprint
+    //public float sprintLength = 3f;
+    //public float playertiredness = 4f;
+    //public bool canPlayerSprint = true;
+    //private bool canSprint = false;
     public Image sprintImage;
+    //remove sprint
+
     //new
     //audio
     [SerializeField] private AudioClip walkingAudio;
@@ -98,7 +101,8 @@ public class charcontrol : MonoBehaviour
         // Combine horizontal and vertical movement
         Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
         controller.Move(finalMove * Time.deltaTime);
-
+        //remove sprint
+        /*
         if (Input.GetKey(KeyCode.LeftShift) && canPlayerSprint == true)
         {
             playerSpeed = 12f;
@@ -111,7 +115,11 @@ public class charcontrol : MonoBehaviour
         {
             playerSpeed = 9f;
         }
+        */
     }
+
+    //remove sprint
+    /*
     private IEnumerator Sprint()
     {
         canSprint = true;
@@ -140,4 +148,5 @@ public class charcontrol : MonoBehaviour
         canPlayerSprint = true;
         canSprint = false;
     }
+    */
 }

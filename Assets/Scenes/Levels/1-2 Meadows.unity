@@ -13613,6 +13613,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d036aca4e5d353349acd71c67d81f5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthScript
+  deathAudio: {fileID: 8300000, guid: 702108f064c075a40a117d18bdd850b2, type: 3}
+  hurtAudio: {fileID: 8300000, guid: 203f2e7e0d3806b49822ea1bb44ed4b2, type: 3}
+  eatAudio: {fileID: 8300000, guid: 0372837d90de9b34da7994494aac1813, type: 3}
   health: 150
   maxHealth: 150
   healthBarFill: {fileID: 393934551}
@@ -13733,13 +13736,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChaControl2
   dashImage: {fileID: 1928656530}
-  dashLength: 0.5
   coolDownNumber: 4
   canPlayerDash: 1
-  dashDistance: 5
-  dashSpeed: 20
   cameraTransform: {fileID: 961739753}
   archerWalkingAudio: {fileID: 8300000, guid: b80c73f91b793e54e8b6e9b87d6ac179, type: 3}
+  archerDashAudio: {fileID: 8300000, guid: 0207bd8ffe76d114c9c89b122fc8e18b, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!82 &720627974
 AudioSource:

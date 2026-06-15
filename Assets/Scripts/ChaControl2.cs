@@ -16,12 +16,12 @@ public class ChaControl2 : MonoBehaviour
     //testing dash
     private bool canDash = false;
     public Image dashImage;
-    public float dashLength = 3f;
+    private float dashLength = .5f;
     public float coolDownNumber = 4f;
     public bool canPlayerDash = true;
     //dash effects
-    public float dashDistance = 16f;
-    public float dashSpeed = 40f;
+    private float dashDistance = 10f;
+    private float dashSpeed = 20f;
     private bool amIDashing = false;
     private Vector3 dashLoction;
 
@@ -32,6 +32,7 @@ public class ChaControl2 : MonoBehaviour
     //audio
     [SerializeField] private AudioClip archerWalkingAudio;
     private AudioSource audioArcherSource;
+    [SerializeField] private AudioClip archerDashAudio;
 
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
@@ -113,6 +114,8 @@ public class ChaControl2 : MonoBehaviour
         {
             if (!canDash)
             {
+                audioArcherSource.clip = archerDashAudio;
+                audioArcherSource.Play();
                 StartCoroutine(Dashing());
                 StartDashing();
             }
