@@ -190,7 +190,6 @@ public class HealthScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
-<<<<<<< Updated upstream
         {
             TakeDamage(10f);
             audioHealthSource.clip = hurtAudio;
@@ -209,15 +208,13 @@ public class HealthScript : MonoBehaviour
             audioHealthSource.clip = hurtAudio;
             audioHealthSource.Play();
         }
-=======
-            TakeDamage(10f, other.transform.position);
+            //TakeDamage(10f, other.transform.position);
 
         if (other.CompareTag("spider"))
             TakeDamage(15f, other.transform.position);
 
         if (other.CompareTag("Boss"))
             TakeDamage(20f, other.transform.position);
->>>>>>> Stashed changes
 
         if (other.CompareTag("Heal"))
         {
@@ -230,12 +227,9 @@ public class HealthScript : MonoBehaviour
 
     void Die()
     {
-<<<<<<< Updated upstream
         Debug.Log("Player died");
         audioHealthSource.clip = deathAudio;
         audioHealthSource.Play();
-=======
->>>>>>> Stashed changes
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
