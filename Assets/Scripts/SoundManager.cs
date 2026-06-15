@@ -5,7 +5,7 @@ public class SoundManager : MonoBehaviour
 {
     public Slider volumeSlider;
     //public Slider othersSlider;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //this script manaages the slider for controlling the volume
     void Start()
     {
         if (PlayerPrefs.HasKey("soundVolume"))
