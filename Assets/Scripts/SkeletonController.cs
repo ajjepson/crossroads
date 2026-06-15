@@ -3,156 +3,240 @@ using UnityEngine;
 
 public class SkeletonController : MonoBehaviour
 {
-    public enum EnemyState { Patrol, Chase, Attack }
-    public EnemyState currentState;
+    public enum EnemyState
+    {
+        Patrol,
+        Chase,
+        Attack
+    }
 
     [Header("Setup")]
-    private Vector3 patrolCenter;
-    public float patrolRadius = 2f;
-    private Vector3 patrolTarget;
     [SerializeField] private FloatingHealthBar healthBar;
 
     [Header("Target Tags")]
     [SerializeField] private string[] targetTags = { "Player", "archer" };
 
-    [Header("Stats")]
-    [SerializeField] private float speed = 2f;
+    [Header("Movement")]
+    [SerializeField] private float patrolRadius = 5f;
     [SerializeField] private float sightRange = 10f;
     [SerializeField] private float attackRange = 2f;
+
+    [Header("Combat")]
     [SerializeField] private int maxHealth = 30;
     [SerializeField] private int damage = 10;
     [SerializeField] private float attackCooldown = 1f;
 
-    int health;
-    float lastAttackTime;
+    private EnemyState currentState;
 
-    // Nearest target this frame
-    Transform currentTarget;
-    HealthScript currentTargetHealth;
+    private UnityEngine.AI.NavMeshAgent agent;
 
-    void Start()
+    private Vector3 patrolCenter;
+    private Vector3 patrolTarget;
+
+    private Transform currentTarget;
+    private HealthScript currentTargetHealth;
+
+    private int health;
+    private float lastAttackTime;
+
+    private void Start()
     {
-        health = maxHealth;
-        patrolCenter = transform.position;
-        healthBar?.UpdateBar(health, maxHealth);
-        SetNewPatrolPoint();
-    }
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
-    void Update()
-    {
-        FindNearestTarget();
-
-        if (currentTarget == null)
+        if (!agent.isOnNavMesh)
         {
-            currentState = EnemyState.Patrol;
-            Patrol();
+            Debug.LogError(gameObject.name + " is NOT on a NavMesh!");
             return;
         }
 
-        float dist = Vector3.Distance(transform.position, currentTarget.position);
+        health = maxHealth;
 
-        if (dist <= attackRange) currentState = EnemyState.Attack;
-        else if (dist <= sightRange) currentState = EnemyState.Chase;
-        else currentState = EnemyState.Patrol;
+        patrolCenter = transform.position;
 
-        switch (currentState)
+        if (healthBar != null)
         {
-            case EnemyState.Patrol: Patrol(); break;
-            case EnemyState.Chase: Chase(); break;
-            case EnemyState.Attack: Attack(); break;
+            healthBar.UpdateBar(health, maxHealth);
         }
+
+        SetNewPatrolPoint();
+
+        InvokeRepeating(nameof(FindNearestTarget), 0f, 0.5f);
     }
 
-    // Scans all tagged targets and locks onto the closest one
-    void FindNearestTarget()
+    private void Update()
     {
-        float nearestDist = Mathf.Infinity;
-        Transform nearest = null;
-        HealthScript nearestHealth = null;
+        if (!agent.isOnNavMesh)
+            return;
 
-        foreach (string tag in targetTags)
+        UpdateState();
+    }
+
+    private void UpdateState()
+    {
+        if (currentTarget == null)
         {
-            GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
-            foreach (GameObject t in targets)
+            currentState = EnemyState.Patrol;
+        }
+        else
+        {
+            float distance =
+                Vector3.Distance(transform.position,
+                                 currentTarget.position);
+
+            if (distance <= attackRange)
             {
-                float dist = Vector3.Distance(transform.position, t.transform.position);
-                if (dist < nearestDist)
-                {
-                    nearestDist = dist;
-                    nearest = t.transform;
-                    nearestHealth = t.GetComponent<HealthScript>();
-                }
+                currentState = EnemyState.Attack;
+            }
+            else if (distance <= sightRange)
+            {
+                currentState = EnemyState.Chase;
+            }
+            else
+            {
+                currentState = EnemyState.Patrol;
             }
         }
 
-        currentTarget = nearest;
-        currentTargetHealth = nearestHealth;
+        switch (currentState)
+        {
+            case EnemyState.Patrol:
+                Patrol();
+                break;
+
+            case EnemyState.Chase:
+                Chase();
+                break;
+
+            case EnemyState.Attack:
+                Attack();
+                break;
+        }
     }
 
-    void Patrol()
+    private void FindNearestTarget()
     {
-        Move(patrolTarget);
-        if (Vector3.Distance(transform.position, patrolTarget) < 0.5f)
+        float nearestDistance = Mathf.Infinity;
+
+        currentTarget = null;
+        currentTargetHealth = null;
+
+        foreach (string tag in targetTags)
+        {
+            GameObject[] targets =
+                GameObject.FindGameObjectsWithTag(tag);
+
+            foreach (GameObject target in targets)
+            {
+                float distance =
+                    Vector3.Distance(transform.position,
+                                     target.transform.position);
+
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    currentTarget = target.transform;
+                    currentTargetHealth =
+                        target.GetComponent<HealthScript>();
+                }
+            }
+        }
+    }
+
+    private void Patrol()
+    {
+        agent.isStopped = false;
+
+        if (!agent.pathPending &&
+            agent.remainingDistance <= 0.5f)
+        {
             SetNewPatrolPoint();
+        }
+
+        agent.SetDestination(patrolTarget);
     }
 
-    void SetNewPatrolPoint()
+    private void SetNewPatrolPoint()
     {
-        Vector2 random = Random.insideUnitCircle.normalized * Random.Range(1f, patrolRadius);
-        patrolTarget = new Vector3(
-            patrolCenter.x + random.x,
-            transform.position.y,
-            patrolCenter.z + random.y);
+        Vector2 randomPoint =
+            Random.insideUnitCircle * patrolRadius;
+
+        Vector3 candidate =
+            patrolCenter +
+            new Vector3(randomPoint.x, 0f, randomPoint.y);
+
+        UnityEngine.AI.NavMeshHit hit;
+
+        if (UnityEngine.AI.NavMesh.SamplePosition(
+            candidate,
+            out hit,
+            patrolRadius,
+            UnityEngine.AI.NavMesh.AllAreas))
+        {
+            patrolTarget = hit.position;
+        }
+        else
+        {
+            patrolTarget = patrolCenter;
+        }
     }
 
-    void Chase()
+    private void Chase()
     {
-        Move(currentTarget.position);
+        if (currentTarget == null)
+            return;
+
+        agent.isStopped = false;
+        agent.SetDestination(currentTarget.position);
     }
 
-    void Attack()
+    private void Attack()
     {
-        float dist = Vector3.Distance(transform.position, currentTarget.position);
-        if (dist > attackRange * 0.8f)
-            Move(currentTarget.position);
+        if (currentTarget == null)
+            return;
 
-        if (Time.time > lastAttackTime + attackCooldown)
+        agent.isStopped = true;
+
+        Vector3 lookTarget = currentTarget.position;
+        lookTarget.y = transform.position.y;
+
+        transform.LookAt(lookTarget);
+
+        if (Time.time >= lastAttackTime + attackCooldown)
         {
             if (currentTargetHealth != null)
-                currentTargetHealth.TakeDamage((float)damage);
-            else
-                Debug.LogWarning("Target has no HealthScript!");
+            {
+                currentTargetHealth.TakeDamage(damage);
+            }
 
             lastAttackTime = Time.time;
         }
     }
 
-    void Move(Vector3 target)
-    {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            new Vector3(target.x, transform.position.y, target.z),
-            speed * Time.deltaTime
-        );
-    }
-
     public void TakeDamage(int amount)
     {
         health -= amount;
-        healthBar?.UpdateBar(health, maxHealth);
-        if (health <= 0) Destroy(gameObject);
+
+        if (healthBar != null)
+        {
+            healthBar.UpdateBar(health, maxHealth);
+        }
+
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
-    void OnDrawGizmos()
+    private void Die()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        CancelInvoke();
 
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        if (agent != null)
+        {
+            agent.isStopped = true;
+        }
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
+        Destroy(gameObject);
     }
 
     public void SetPatrolArea(Vector3 center, float radius)
@@ -162,8 +246,19 @@ public class SkeletonController : MonoBehaviour
         SetNewPatrolPoint();
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
 
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
+    }
 }
+    
 
 
 

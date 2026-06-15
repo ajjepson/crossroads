@@ -37,6 +37,13 @@ public class ChaControl2 : MonoBehaviour
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
 
+    [Header("Knockback")]
+    public float knockbackStrength = 12f;
+    public float knockbackDuration = 0.25f;
+    private bool isKnockedBack = false;
+    private Vector3 knockbackVelocity;
+
+
     private void Awake()
     {
         /*
@@ -166,5 +173,31 @@ public class ChaControl2 : MonoBehaviour
         dashImage.fillAmount = 1f;
         canPlayerDash = true;
         canDash = false;
+    }
+    public void ApplyKnockback(Vector3 sourcePosition)
+    {
+        Vector3 dir = (transform.position - sourcePosition).normalized;
+        dir.y = 0f;
+
+        knockbackVelocity = dir * knockbackStrength;
+
+        StartCoroutine(KnockbackRoutine());
+    }
+    IEnumerator KnockbackRoutine()
+    {
+        isKnockedBack = true;
+
+        float t = 0f;
+
+        while (t < knockbackDuration)
+        {
+            t += Time.deltaTime;
+
+            controller.Move(knockbackVelocity * Time.deltaTime);
+
+            yield return null;
+        }
+
+        isKnockedBack = false;
     }
 }
