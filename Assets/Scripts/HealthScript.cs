@@ -3,10 +3,17 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 
 public class HealthScript : MonoBehaviour
 {
+    //for audio
+    [SerializeField] private AudioClip deathAudio;
+    [SerializeField] private AudioClip hurtAudio;
+    [SerializeField] private AudioClip eatAudio;
+    private AudioSource audioHealthSource;
+    // audio
     [Header("Health")]
     public float health = 150f;
     public float maxHealth = 150f;
@@ -28,6 +35,7 @@ public class HealthScript : MonoBehaviour
 
     void Start()
     {
+        audioHealthSource = GetComponent<AudioSource>();
         health = maxHealth;
         UpdateUI();
     }
@@ -128,20 +136,28 @@ public class HealthScript : MonoBehaviour
         if (other.CompareTag("enemy"))
         {
             TakeDamage(10f);
+            audioHealthSource.clip = hurtAudio;
+            audioHealthSource.Play();
         }
 
         if (other.CompareTag("spider"))
         {
             TakeDamage(15f);
+            audioHealthSource.clip = hurtAudio;
+            audioHealthSource.Play();
         }
         if (other.CompareTag("Boss"))
         {
             TakeDamage(20);
+            audioHealthSource.clip = hurtAudio;
+            audioHealthSource.Play();
         }
 
         if (other.CompareTag("Heal"))
         {
             Heal(10f);
+            audioHealthSource.clip = eatAudio;
+            audioHealthSource.Play();
             Destroy(other.gameObject);
         }
     }
@@ -150,6 +166,8 @@ public class HealthScript : MonoBehaviour
     void Die()
     {
         Debug.Log("Player died");
+        audioHealthSource.clip = deathAudio;
+        audioHealthSource.Play();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
