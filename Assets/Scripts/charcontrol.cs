@@ -121,18 +121,14 @@ public class charcontrol : MonoBehaviour
         {
             audioWalkingSource.Stop();
         }
-
-<<<<<<< Updated upstream
         // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         // Combine horizontal and vertical movement
-        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
-        controller.Move(finalMove * Time.deltaTime);
+        //Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+        //controller.Move(finalMove * Time.deltaTime);
         //remove sprint
         /*
-=======
->>>>>>> Stashed changes
         if (Input.GetKey(KeyCode.LeftShift) && canPlayerSprint == true)
         {
             playerSpeed = 12f;
@@ -147,11 +143,6 @@ public class charcontrol : MonoBehaviour
         }
         */
     }
-
-<<<<<<< Updated upstream
-    //remove sprint
-    /*
-=======
     private Vector3 GetMouseAimPoint()
     {
        
@@ -166,8 +157,8 @@ public class charcontrol : MonoBehaviour
 
         return transform.position + cameraTransform.forward;
     }
-
->>>>>>> Stashed changes
+    //remove sprint
+    /*
     private IEnumerator Sprint()
     {
         canSprint = true;
@@ -195,9 +186,7 @@ public class charcontrol : MonoBehaviour
         canPlayerSprint = true;
         canSprint = false;
     }
-<<<<<<< Updated upstream
     */
-=======
     public void ApplyKnockback(Vector3 sourcePosition)
     {
         Vector3 dir = (transform.position - sourcePosition).normalized;
@@ -224,5 +213,4 @@ public class charcontrol : MonoBehaviour
 
         isKnockedBack = false;
     }
->>>>>>> Stashed changes
 }
