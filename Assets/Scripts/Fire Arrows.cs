@@ -8,13 +8,17 @@ public class FireArrows : MonoBehaviour
     public Rigidbody fireArrow;
     public Rigidbody iceArrow;
     public Rigidbody arrow;
+
     private float normalSpeed = 7.5f;
     private float fireSpeed = 10f;
-    private int fireCount = 30;
     private float iceSpeed = 5f;
+
+    private int fireCount = 30;
+
     public bool arrowFire;
     public bool arrowIce;
     public bool arrowNormal;
+
     public TMP_Text typeOfArrow;
     public TMP_Text amount;
 
@@ -22,86 +26,90 @@ public class FireArrows : MonoBehaviour
     public Sprite fireSprite;
     public Sprite iceSprite;
     public Sprite normalSprite;
-    //for level 1-2
+
     public int ropecut = 0;
-    //
-    //new
+
     public float arrowsCoolDown = 1f;
     public bool canPlayerShoot = true;
     public bool arrowsHitbox = false;
+
     public Transform firePoint;
     public Image arrowsImage;
-    //new
 
-    //audio
     [SerializeField] private AudioClip bowShotAudio;
     private AudioSource audioBowSource;
-    //
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         amount.text = fireCount.ToString();
         amount.enabled = false;
+
         typeOfArrow.text = "Normal";
+
         arrowFire = false;
         arrowIce = false;
         arrowNormal = true;
-        //arrowImage = GetComponent<Image>();
+
         arrowImage.sprite = normalSprite;
 
         audioBowSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         amount.text = fireCount.ToString();
-        if (Input.GetKeyDown(KeyCode.Alpha1)) //1 key
+
+        // Arrow switching
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //normal arrow is selected
             amount.enabled = false;
-            Debug.Log("normal");
             arrowImage.sprite = normalSprite;
             typeOfArrow.text = "Normal";
+
             arrowFire = false;
             arrowIce = false;
             arrowNormal = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) //2 key
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //ice arrow is selected
-            Debug.Log("ice");
             amount.enabled = false;
             arrowImage.sprite = iceSprite;
             typeOfArrow.text = "Ice";
+
             arrowFire = false;
             arrowIce = true;
             arrowNormal = false;
         }
-        else if(Input.GetKeyDown(KeyCode.Alpha3)) //3 key
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //fire arrow is selected
             amount.enabled = true;
-            Debug.Log("fire");
-            typeOfArrow.text = "Fire";
             arrowImage.sprite = fireSprite;
+            typeOfArrow.text = "Fire";
+
             arrowFire = true;
             arrowIce = false;
             arrowNormal = false;
         }
-        if (Input.GetMouseButtonDown(1) && canPlayerShoot == true)
-        {
-            //arrows audio
 
+        // Shooting
+        if (Input.GetMouseButtonDown(1) && canPlayerShoot)
+        {
             audioBowSource.clip = bowShotAudio;
             audioBowSource.Play();
+
             StartCoroutine(ArrowsAttack());
+
+           
+            Plane plane = new Plane(Vector3.up, firePoint.position);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (!Physics.Raycast(ray, out RaycastHit hit))
+            if (!plane.Raycast(ray, out float distance))
                 return;
 
-            Vector3 direction = (hit.point - firePoint.position).normalized;
+            Vector3 targetPoint = ray.GetPoint(distance);
+
+            Vector3 direction =
+                (targetPoint - firePoint.position).normalized;
 
             Rigidbody arrowToShoot;
             float speed;
@@ -113,6 +121,7 @@ public class FireArrows : MonoBehaviour
                     Debug.Log("Out of fire arrows!");
                     return;
                 }
+
                 arrowToShoot = fireArrow;
                 speed = fireSpeed;
                 fireCount--;
@@ -127,32 +136,40 @@ public class FireArrows : MonoBehaviour
                 arrowToShoot = arrow;
                 speed = normalSpeed;
             }
+
             Rigidbody projectile = Instantiate(
-               arrowToShoot,
-               firePoint.position,
-               Quaternion.identity
-           );
+                arrowToShoot,
+                firePoint.position,
+                Quaternion.identity
+            );
+
             projectile.transform.forward = direction;
+
+            
             projectile.linearVelocity = direction * speed;
+
             Destroy(projectile.gameObject, 5f);
-
-
         }
     }
+
     private IEnumerator ArrowsAttack()
     {
         canPlayerShoot = false;
         arrowsHitbox = true;
+
         arrowsImage.fillAmount = 0f;
+
         float arrowCountdown = 0f;
+
         while (arrowCountdown < arrowsCoolDown)
         {
             arrowCountdown += Time.deltaTime;
             arrowsImage.fillAmount = (arrowCountdown / arrowsCoolDown);
             yield return null;
-
         }
+
         arrowsImage.fillAmount = 1f;
+
         arrowsHitbox = false;
         canPlayerShoot = true;
     }

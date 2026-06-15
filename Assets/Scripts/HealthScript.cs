@@ -19,7 +19,7 @@ public class HealthScript : MonoBehaviour
     public float maxHealth = 150f;
 
     [Header("UI")]
-    public Image healthBarFill; 
+    public Image healthBarFill;
     public TMP_Text playerHealth;
 
     [Header("Shield")]
@@ -33,11 +33,20 @@ public class HealthScript : MonoBehaviour
     public float invulnerabilityDuration = 1f;
     private bool isInvulnerable = false;
 
+    [Header("Damage Feedback")]
+    public Image damageFlashImage;
+    public AudioClip hitSound;
+    private AudioSource audioSource;
+
+    [Header("Knockback")]
+    public string playerTag = "Player";
+
     void Start()
     {
         audioHealthSource = GetComponent<AudioSource>();
         health = maxHealth;
         UpdateUI();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,20 +54,17 @@ public class HealthScript : MonoBehaviour
         if (playerHealth != null)
             playerHealth.text = Mathf.RoundToInt(health) + " / " + Mathf.RoundToInt(maxHealth);
 
-       
         if (healthBarFill != null)
             healthBarFill.fillAmount = health / maxHealth;
 
         if (Input.GetKeyDown(KeyCode.Space) && canUseShield)
-        {
             StartCoroutine(ShieldRoutine());
-        }
 
         UpdateHealthColor();
     }
 
-    // DAMAGE 
-    public void TakeDamage(float damage)
+    // DAMAGE
+    public void TakeDamage(float damage, Vector3 hitSource)
     {
         if (isInvulnerable) return;
         if (shieldActive) return;
@@ -67,6 +73,21 @@ public class HealthScript : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
 
         UpdateUI();
+        PlayDamageFeedback();
+
+        //  TAG-BASED 
+        GameObject player = GameObject.FindGameObjectWithTag(playerTag);
+
+        if (player != null)
+        {
+            charcontrol knight = player.GetComponent<charcontrol>();
+            if (knight != null)
+                knight.ApplyKnockback(hitSource);
+
+            ChaControl2 archer = player.GetComponent<ChaControl2>();
+            if (archer != null)
+                archer.ApplyKnockback(hitSource);
+        }
 
         if (health <= 0)
             Die();
@@ -74,7 +95,46 @@ public class HealthScript : MonoBehaviour
         StartCoroutine(InvincibilityFrames());
     }
 
-    //  HEAL 
+    // SIMPLE DAMAGE
+    public void TakeDamage(float damage)
+    {
+        TakeDamage(damage, transform.position - transform.forward);
+    }
+
+    void PlayDamageFeedback()
+    {
+        if (damageFlashImage != null)
+            StartCoroutine(DamageFlash());
+
+        if (audioSource != null && hitSound != null)
+            audioSource.PlayOneShot(hitSound);
+    }
+
+    IEnumerator DamageFlash()
+    {
+        damageFlashImage.gameObject.SetActive(true);
+
+        Color c = damageFlashImage.color;
+        c.a = 0.4f;
+        damageFlashImage.color = c;
+
+        yield return new WaitForSeconds(0.05f);
+
+        float t = 0f;
+
+        while (t < 0.2f)
+        {
+            t += Time.deltaTime;
+            c.a = Mathf.Lerp(0.4f, 0f, t / 0.2f);
+            damageFlashImage.color = c;
+            yield return null;
+        }
+
+        c.a = 0f;
+        damageFlashImage.color = c;
+        damageFlashImage.gameObject.SetActive(false);
+    }
+
     public void Heal(float amount)
     {
         health += amount;
@@ -82,7 +142,6 @@ public class HealthScript : MonoBehaviour
         UpdateUI();
     }
 
-    // SHIELD
     IEnumerator ShieldRoutine()
     {
         canUseShield = false;
@@ -96,7 +155,6 @@ public class HealthScript : MonoBehaviour
         while (t < shieldDuration)
         {
             t += Time.deltaTime;
-
             if (shieldImage != null)
                 shieldImage.fillAmount = 1f - (t / shieldDuration);
 
@@ -106,10 +164,10 @@ public class HealthScript : MonoBehaviour
         shieldActive = false;
 
         float cd = 0f;
+
         while (cd < shieldCooldown)
         {
             cd += Time.deltaTime;
-
             if (shieldImage != null)
                 shieldImage.fillAmount = cd / shieldCooldown;
 
@@ -122,7 +180,6 @@ public class HealthScript : MonoBehaviour
         canUseShield = true;
     }
 
-    //  INVINCIBILITY 
     IEnumerator InvincibilityFrames()
     {
         isInvulnerable = true;
@@ -130,10 +187,10 @@ public class HealthScript : MonoBehaviour
         isInvulnerable = false;
     }
 
-    //  COLLISIONS
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("enemy"))
+<<<<<<< Updated upstream
         {
             TakeDamage(10f);
             audioHealthSource.clip = hurtAudio;
@@ -152,6 +209,15 @@ public class HealthScript : MonoBehaviour
             audioHealthSource.clip = hurtAudio;
             audioHealthSource.Play();
         }
+=======
+            TakeDamage(10f, other.transform.position);
+
+        if (other.CompareTag("spider"))
+            TakeDamage(15f, other.transform.position);
+
+        if (other.CompareTag("Boss"))
+            TakeDamage(20f, other.transform.position);
+>>>>>>> Stashed changes
 
         if (other.CompareTag("Heal"))
         {
@@ -162,16 +228,17 @@ public class HealthScript : MonoBehaviour
         }
     }
 
-    // DEATH 
     void Die()
     {
+<<<<<<< Updated upstream
         Debug.Log("Player died");
         audioHealthSource.clip = deathAudio;
         audioHealthSource.Play();
+=======
+>>>>>>> Stashed changes
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    //  UI 
     void UpdateUI()
     {
         if (healthBarFill != null)
@@ -181,7 +248,6 @@ public class HealthScript : MonoBehaviour
             playerHealth.text = Mathf.RoundToInt(health) + " / " + Mathf.RoundToInt(maxHealth);
     }
 
-   
     void UpdateHealthColor()
     {
         if (healthBarFill == null) return;
