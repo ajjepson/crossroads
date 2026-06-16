@@ -19,6 +19,7 @@ TagManager:
   - spider
   - Ice
   - Boss
+  - poisonGas
   layers:
   - Default
   - TransparentFX

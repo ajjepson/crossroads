@@ -225,6 +225,17 @@ public class HealthScript : MonoBehaviour
         }
     }
 
+    //poison, deathly gass
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("poisonGas"))
+        {
+            TakeDamage(3f);
+            audioHealthSource.clip = hurtAudio;
+            audioHealthSource.Play();
+        }
+    }
+
     void Die()
     {
         Debug.Log("Player died");

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -27,7 +28,14 @@ public class SpiderBoss : MonoBehaviour
     //for webSpit
     public GameObject webSpit;
     public Transform webSpitSpawner;
+    private float cooldownspit = 2;
+    private float cooldownTimer = 0;
+    //
 
+    //for audio
+    [SerializeField] private AudioClip spiderSprayAudio;
+    private AudioSource spiderAudioSource;
+    //
     //new
     enum EnemyAIActions { walking, chasing, attacking, /*new*/ runaway }
 
@@ -46,6 +54,7 @@ public class SpiderBoss : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spiderAudioSource = GetComponent<AudioSource>();
         poisionBreath.SetActive(false);
         spiderMaxHealth = spiderHealth;
         //new
@@ -62,6 +71,9 @@ public class SpiderBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //for web spit
+        cooldownTimer -= Time.deltaTime;
+        //
         if (spiderHealth <= 0)
         {
             SceneManager.LoadScene("2-1 Frozen Lake");
@@ -79,6 +91,18 @@ public class SpiderBoss : MonoBehaviour
         FollowingCurrentState();
         //new
     }
+
+    //for web spit
+    private void spitAtPlayer()
+    {
+        if (cooldownTimer <= 0)
+        {
+            Instantiate(webSpit, webSpitSpawner.position, webSpitSpawner.rotation);
+            cooldownTimer = cooldownspit;
+        }
+    }
+    //for web spit
+
 
     //handle spider retreat
     public void SpiderTookDamage(int amount)
@@ -145,18 +169,22 @@ public class SpiderBoss : MonoBehaviour
                 //chance of poision attack is 25% 
                 if (UnityEngine.Random.value < .25f)
                 {
+                    spiderAudioSource.clip = spiderSprayAudio;
+                    spiderAudioSource.Play();
                     poisionBreath.SetActive(true);
                 }
                 else
                 {
                     //poison chance failed
                     poisionBreath.SetActive(false);
+                    spiderAudioSource.Stop();
 
                 }
             }
         }
         else
         {
+            spiderAudioSource.Stop();
             currentState = EnemyAIActions.walking;
             poisionBreath.SetActive(false);
             breathAttack = false;
@@ -181,6 +209,8 @@ public class SpiderBoss : MonoBehaviour
                 break;
             case EnemyAIActions.chasing:
                 agent.SetDestination(player.transform.position);
+                //if (UnityEngine.Random.value < .25f)
+                spitAtPlayer();
                 break;
             case EnemyAIActions.attacking:
                 agent.SetDestination(player.transform.position);
