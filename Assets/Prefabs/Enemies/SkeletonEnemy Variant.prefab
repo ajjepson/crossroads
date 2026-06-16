@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330263778282843775}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.0748434, y: 2.0150416, z: -3.2707946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -131,14 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54fe76412293916428894ca2309077d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkeletonController
-  healthBar: {fileID: 360167581278429944}
+  animator: {fileID: 0}
   targetTags:
   - Player
   - archer
   patrolRadius: 8.7
   sightRange: 5.54
   attackRange: 1.5
-  maxHealth: 20
   damage: 12
   attackCooldown: 1
 --- !u!54 &155556441956110801
@@ -182,8 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   health: 100
   maxHealth: 100
-  healthBar: {fileID: 0}
-  healthText: {fileID: 0}
+  floatingHealthBar: {fileID: 360167581278429944}
 --- !u!195 &-4017736091436034340
 NavMeshAgent:
   m_ObjectHideFlags: 0
