@@ -22,6 +22,11 @@ public class SpiderBoss : MonoBehaviour
     private float cooldownSpider = 0;
     private float retreatTime = 3;
     private float retreatLength = 10;
+    //
+
+    //for webSpit
+    public GameObject webSpit;
+    public Transform webSpitSpawner;
 
     //new
     enum EnemyAIActions { walking, chasing, attacking, /*new*/ runaway }
