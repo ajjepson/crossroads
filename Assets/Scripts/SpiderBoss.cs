@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -150,6 +151,18 @@ public class SpiderBoss : MonoBehaviour
     }
     //handle spider retreat
 
+
+    //for spider breathcool down
+    private IEnumerator PoisonCoolDown()
+    {
+        poisionBreath.SetActive(true);
+        spiderAudioSource.Play();
+        yield return new WaitForSeconds(2.5f);
+
+        poisionBreath.SetActive(false);
+        spiderAudioSource.Stop();
+        breathAttack = false;
+    }
     //new
     private void DetermineCurrentState()
     {
@@ -169,9 +182,10 @@ public class SpiderBoss : MonoBehaviour
                 //chance of poision attack is 25% 
                 if (UnityEngine.Random.value < .25f)
                 {
-                    spiderAudioSource.clip = spiderSprayAudio;
-                    spiderAudioSource.Play();
-                    poisionBreath.SetActive(true);
+                    //spiderAudioSource.clip = spiderSprayAudio;
+                    //spiderAudioSource.Play();
+                    //poisionBreath.SetActive(true);
+                    StartCoroutine(PoisonCoolDown());
                 }
                 else
                 {
@@ -209,8 +223,14 @@ public class SpiderBoss : MonoBehaviour
                 break;
             case EnemyAIActions.chasing:
                 agent.SetDestination(player.transform.position);
-                //if (UnityEngine.Random.value < .25f)
-                spitAtPlayer();
+                if (UnityEngine.Random.value < .5f)
+                {
+                    spitAtPlayer();
+                }
+                else
+                {
+                    //failed 50%
+                }
                 break;
             case EnemyAIActions.attacking:
                 agent.SetDestination(player.transform.position);
