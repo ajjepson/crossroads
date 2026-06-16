@@ -11,8 +11,7 @@ public class SkeletonController : MonoBehaviour
     }
 
     [Header("Setup")]
-    [SerializeField] private FloatingHealthBar healthBar;
-    [SerializeField] private Animator animator; // ANIMATION - Animator slot
+    [SerializeField] private Animator animator;
 
     [Header("Target Tags")]
     [SerializeField] private string[] targetTags = { "Player", "archer" };
@@ -23,7 +22,6 @@ public class SkeletonController : MonoBehaviour
     [SerializeField] private float attackRange = 2f;
 
     [Header("Combat")]
-    [SerializeField] private int maxHealth = 30;
     [SerializeField] private int damage = 10;
     [SerializeField] private float attackCooldown = 1f;
 
@@ -37,16 +35,13 @@ public class SkeletonController : MonoBehaviour
     private Transform currentTarget;
     private HealthScript currentTargetHealth;
 
-    private int health;
     private float lastAttackTime;
 
     private void Start()
     {
-        // ANIMATION - finds Animator on this object or child object
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
 
-        // NAVMESH - this was missing
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         if (agent == null)
@@ -63,14 +58,7 @@ public class SkeletonController : MonoBehaviour
             return;
         }
 
-        health = maxHealth;
-
         patrolCenter = transform.position;
-
-        if (healthBar != null)
-        {
-            healthBar.UpdateBar(health, maxHealth);
-        }
 
         SetNewPatrolPoint();
 
@@ -96,9 +84,7 @@ public class SkeletonController : MonoBehaviour
         }
         else
         {
-            float distance =
-                Vector3.Distance(transform.position,
-                                 currentTarget.position);
+            float distance = Vector3.Distance(transform.position, currentTarget.position);
 
             if (distance <= attackRange)
             {
@@ -139,21 +125,17 @@ public class SkeletonController : MonoBehaviour
 
         foreach (string tag in targetTags)
         {
-            GameObject[] targets =
-                GameObject.FindGameObjectsWithTag(tag);
+            GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
 
             foreach (GameObject target in targets)
             {
-                float distance =
-                    Vector3.Distance(transform.position,
-                                     target.transform.position);
+                float distance = Vector3.Distance(transform.position, target.transform.position);
 
                 if (distance < nearestDistance)
                 {
                     nearestDistance = distance;
                     currentTarget = target.transform;
-                    currentTargetHealth =
-                        target.GetComponent<HealthScript>();
+                    currentTargetHealth = target.GetComponent<HealthScript>();
                 }
             }
         }
@@ -163,12 +145,10 @@ public class SkeletonController : MonoBehaviour
     {
         agent.isStopped = false;
 
-        // ANIMATION - play walking while patrolling
         if (animator != null)
             animator.SetBool("Walking", true);
 
-        if (!agent.pathPending &&
-            agent.remainingDistance <= 0.5f)
+        if (!agent.pathPending && agent.remainingDistance <= 0.5f)
         {
             SetNewPatrolPoint();
         }
@@ -178,12 +158,9 @@ public class SkeletonController : MonoBehaviour
 
     private void SetNewPatrolPoint()
     {
-        Vector2 randomPoint =
-            Random.insideUnitCircle * patrolRadius;
+        Vector2 randomPoint = Random.insideUnitCircle * patrolRadius;
 
-        Vector3 candidate =
-            patrolCenter +
-            new Vector3(randomPoint.x, 0f, randomPoint.y);
+        Vector3 candidate = patrolCenter + new Vector3(randomPoint.x, 0f, randomPoint.y);
 
         UnityEngine.AI.NavMeshHit hit;
 
@@ -208,7 +185,6 @@ public class SkeletonController : MonoBehaviour
 
         agent.isStopped = false;
 
-        // ANIMATION - play walking while chasing
         if (animator != null)
             animator.SetBool("Walking", true);
 
@@ -222,7 +198,6 @@ public class SkeletonController : MonoBehaviour
 
         agent.isStopped = true;
 
-        // ANIMATION - stop walking while attacking
         if (animator != null)
             animator.SetBool("Walking", false);
 
@@ -233,7 +208,6 @@ public class SkeletonController : MonoBehaviour
 
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            // ANIMATION - play attack animation
             if (animator != null)
                 animator.SetTrigger("Attack");
 
@@ -244,42 +218,6 @@ public class SkeletonController : MonoBehaviour
 
             lastAttackTime = Time.time;
         }
-    }
-
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
-
-        if (healthBar != null)
-        {
-            healthBar.UpdateBar(health, maxHealth);
-        }
-
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        CancelInvoke();
-
-        if (agent != null)
-        {
-            agent.isStopped = true;
-        }
-
-        // ANIMATION - stop walking
-        if (animator != null)
-            animator.SetBool("Walking", false);
-
-        // ANIMATION - play death animation
-        if (animator != null)
-            animator.SetTrigger("Death");
-
-        // Wait 2 seconds so death animation can play
-        Destroy(gameObject, 1f);
     }
 
     public void SetPatrolArea(Vector3 center, float radius)

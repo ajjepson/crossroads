@@ -560,8 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   health: 100
   maxHealth: 100
-  healthBar: {fileID: 0}
-  healthText: {fileID: 0}
+  floatingHealthBar: {fileID: 2838847453127167603}
 --- !u!95 &1304571944083729259
 Animator:
   serializedVersion: 7
@@ -596,7 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54fe76412293916428894ca2309077d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkeletonController
-  healthBar: {fileID: 2838847453127167603}
   animator: {fileID: 1304571944083729259}
   targetTags:
   - Player
@@ -604,7 +602,6 @@ MonoBehaviour:
   patrolRadius: 5
   sightRange: 10
   attackRange: 2
-  maxHealth: 30
   damage: 10
   attackCooldown: 1
 --- !u!54 &6194571827799897575
