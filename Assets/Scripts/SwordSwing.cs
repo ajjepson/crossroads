@@ -116,7 +116,7 @@ public class SwordSwing : MonoBehaviour
         {
             Debug.Log("You hit an Enemy");
 
-            SkeletonController enemy = other.GetComponent<SkeletonController>();
+            Health enemy = other.GetComponent<Health>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
