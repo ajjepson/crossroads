@@ -58,13 +58,6 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
-
-        if (spawner != null)
-        {
-            spawner.currentEnemies--;
-        }
-
         Destroy(gameObject);
     }
     void Awake()
