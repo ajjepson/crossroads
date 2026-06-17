@@ -23,13 +23,13 @@ public class SpiderBoss : MonoBehaviour
     private bool didSpiderRan = false;
     private float cooldownSpider = 0;
     private float retreatTime = 3;
-    private float retreatLength = 10;
+    private float retreatLength = 35;
     //
 
     //for webSpit
     public GameObject webSpit;
     public Transform webSpitSpawner;
-    private float cooldownspit = 2;
+    private float cooldownspit = 4;
     private float cooldownTimer = 0;
     //
 
@@ -112,16 +112,19 @@ public class SpiderBoss : MonoBehaviour
         //spider chance of running away when hp is 150 or more is 25%
         if (spiderHealth >=150 && !didSpiderRan && UnityEngine.Random.value <= .25f)
         {
+            Debug.Log("spider run");
             SpiderBossRan();
         }
         //spider chance of running away when hp is 150-100 is 50%
         else if (spiderHealth >= 100 && spiderHealth < 150 && !didSpiderRan && UnityEngine.Random.value <= .5f)
         {
+            Debug.Log("spider run");
             SpiderBossRan();
         }
         //spider chance of running away when hp is 100 or less is 75%
         else if (spiderHealth < 100 && !didSpiderRan && UnityEngine.Random.value <= .75f)
         {
+            Debug.Log("spider run");
             SpiderBossRan();
         }
         else
@@ -166,6 +169,10 @@ public class SpiderBoss : MonoBehaviour
     //new
     private void DetermineCurrentState()
     {
+        if (currentState == EnemyAIActions.runaway)
+        {
+            return;
+        }
         distanacePlayer = Vector3.Distance(player.transform.position, transform.position);
         if (distanacePlayer < distanaceAttack)
         {
@@ -246,7 +253,7 @@ public class SpiderBoss : MonoBehaviour
         if (other.CompareTag("Arrows"))
         {
             Debug.Log("spider took arrow damage");
-            spiderHealth -= 5;
+            SpiderTookDamage(5);
         }
     }
 }
