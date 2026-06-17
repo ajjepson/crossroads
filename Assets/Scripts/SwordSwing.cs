@@ -128,7 +128,7 @@ public class SwordSwing : MonoBehaviour
         {
             Debug.Log("You hit an spider");
             if (SpiderBoss != null)
-            SpiderBoss.spiderHealth -= 10;
+                SpiderBoss.SpiderTookDamage(10);
         }
         if (other.CompareTag("Boss") && swingHitbox == true)
         {
