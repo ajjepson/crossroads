@@ -25,7 +25,7 @@ public class charcontrol : MonoBehaviour
     //public float playertiredness = 4f;
     //public bool canPlayerSprint = true;
     //private bool canSprint = false;
-    public Image sprintImage;
+    //public Image sprintImage;
     //remove sprint
 
     //new
