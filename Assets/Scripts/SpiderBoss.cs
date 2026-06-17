@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
+=======
+using TMPro;
+using UnityEngine;
+using UnityEngine.AI;
+>>>>>>> origin/main
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -23,6 +29,7 @@ public class SpiderBoss : MonoBehaviour
     private bool didSpiderRan = false;
     private float cooldownSpider = 0;
     private float retreatTime = 3;
+<<<<<<< HEAD
     private float retreatLength = 35;
     //
 
@@ -37,6 +44,10 @@ public class SpiderBoss : MonoBehaviour
     [SerializeField] private AudioClip spiderSprayAudio;
     private AudioSource spiderAudioSource;
     //
+=======
+    private float retreatLength = 10;
+
+>>>>>>> origin/main
     //new
     enum EnemyAIActions { walking, chasing, attacking, /*new*/ runaway }
 
@@ -55,7 +66,10 @@ public class SpiderBoss : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+<<<<<<< HEAD
         spiderAudioSource = GetComponent<AudioSource>();
+=======
+>>>>>>> origin/main
         poisionBreath.SetActive(false);
         spiderMaxHealth = spiderHealth;
         //new
@@ -72,9 +86,12 @@ public class SpiderBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         //for web spit
         cooldownTimer -= Time.deltaTime;
         //
+=======
+>>>>>>> origin/main
         if (spiderHealth <= 0)
         {
             SceneManager.LoadScene("2-1 Frozen Lake");
@@ -93,6 +110,7 @@ public class SpiderBoss : MonoBehaviour
         //new
     }
 
+<<<<<<< HEAD
     //for web spit
     private void spitAtPlayer()
     {
@@ -105,6 +123,8 @@ public class SpiderBoss : MonoBehaviour
     //for web spit
 
 
+=======
+>>>>>>> origin/main
     //handle spider retreat
     public void SpiderTookDamage(int amount)
     {
@@ -112,19 +132,28 @@ public class SpiderBoss : MonoBehaviour
         //spider chance of running away when hp is 150 or more is 25%
         if (spiderHealth >=150 && !didSpiderRan && UnityEngine.Random.value <= .25f)
         {
+<<<<<<< HEAD
             Debug.Log("spider run");
+=======
+>>>>>>> origin/main
             SpiderBossRan();
         }
         //spider chance of running away when hp is 150-100 is 50%
         else if (spiderHealth >= 100 && spiderHealth < 150 && !didSpiderRan && UnityEngine.Random.value <= .5f)
         {
+<<<<<<< HEAD
             Debug.Log("spider run");
+=======
+>>>>>>> origin/main
             SpiderBossRan();
         }
         //spider chance of running away when hp is 100 or less is 75%
         else if (spiderHealth < 100 && !didSpiderRan && UnityEngine.Random.value <= .75f)
         {
+<<<<<<< HEAD
             Debug.Log("spider run");
+=======
+>>>>>>> origin/main
             SpiderBossRan();
         }
         else
@@ -154,6 +183,7 @@ public class SpiderBoss : MonoBehaviour
     }
     //handle spider retreat
 
+<<<<<<< HEAD
 
     //for spider breathcool down
     private IEnumerator PoisonCoolDown()
@@ -173,6 +203,11 @@ public class SpiderBoss : MonoBehaviour
         {
             return;
         }
+=======
+    //new
+    private void DetermineCurrentState()
+    {
+>>>>>>> origin/main
         distanacePlayer = Vector3.Distance(player.transform.position, transform.position);
         if (distanacePlayer < distanaceAttack)
         {
@@ -189,23 +224,33 @@ public class SpiderBoss : MonoBehaviour
                 //chance of poision attack is 25% 
                 if (UnityEngine.Random.value < .25f)
                 {
+<<<<<<< HEAD
                     //spiderAudioSource.clip = spiderSprayAudio;
                     //spiderAudioSource.Play();
                     //poisionBreath.SetActive(true);
                     StartCoroutine(PoisonCoolDown());
+=======
+                    poisionBreath.SetActive(true);
+>>>>>>> origin/main
                 }
                 else
                 {
                     //poison chance failed
                     poisionBreath.SetActive(false);
+<<<<<<< HEAD
                     spiderAudioSource.Stop();
+=======
+>>>>>>> origin/main
 
                 }
             }
         }
         else
         {
+<<<<<<< HEAD
             spiderAudioSource.Stop();
+=======
+>>>>>>> origin/main
             currentState = EnemyAIActions.walking;
             poisionBreath.SetActive(false);
             breathAttack = false;
@@ -230,6 +275,7 @@ public class SpiderBoss : MonoBehaviour
                 break;
             case EnemyAIActions.chasing:
                 agent.SetDestination(player.transform.position);
+<<<<<<< HEAD
                 if (UnityEngine.Random.value < .5f)
                 {
                     spitAtPlayer();
@@ -238,6 +284,8 @@ public class SpiderBoss : MonoBehaviour
                 {
                     //failed 50%
                 }
+=======
+>>>>>>> origin/main
                 break;
             case EnemyAIActions.attacking:
                 agent.SetDestination(player.transform.position);
@@ -253,7 +301,11 @@ public class SpiderBoss : MonoBehaviour
         if (other.CompareTag("Arrows"))
         {
             Debug.Log("spider took arrow damage");
+<<<<<<< HEAD
             SpiderTookDamage(5);
+=======
+            spiderHealth -= 5;
+>>>>>>> origin/main
         }
     }
 }

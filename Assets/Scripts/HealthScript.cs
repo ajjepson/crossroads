@@ -225,6 +225,7 @@ public class HealthScript : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     //poison, deathly gass
     private void OnTriggerStay(Collider other)
     {
@@ -236,6 +237,8 @@ public class HealthScript : MonoBehaviour
         }
     }
 
+=======
+>>>>>>> origin/main
     void Die()
     {
         Debug.Log("Player died");

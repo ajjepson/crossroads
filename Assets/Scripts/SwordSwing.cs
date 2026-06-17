@@ -116,7 +116,11 @@ public class SwordSwing : MonoBehaviour
         {
             Debug.Log("You hit an Enemy");
 
+<<<<<<< HEAD
             Health enemy = other.GetComponent<Health>();
+=======
+            SkeletonController enemy = other.GetComponent<SkeletonController>();
+>>>>>>> origin/main
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
@@ -128,7 +132,11 @@ public class SwordSwing : MonoBehaviour
         {
             Debug.Log("You hit an spider");
             if (SpiderBoss != null)
+<<<<<<< HEAD
                 SpiderBoss.SpiderTookDamage(10);
+=======
+            SpiderBoss.spiderHealth -= 10;
+>>>>>>> origin/main
         }
         if (other.CompareTag("Boss") && swingHitbox == true)
         {

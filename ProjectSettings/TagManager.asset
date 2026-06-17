@@ -19,7 +19,10 @@ TagManager:
   - spider
   - Ice
   - Boss
+<<<<<<< HEAD
   - poisonGas
+=======
+>>>>>>> origin/main
   layers:
   - Default
   - TransparentFX
